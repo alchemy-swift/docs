@@ -1,8 +1,14 @@
 # Table of contents
 
+* [Welcome](README.md)
+* [Tutorial](tutorial.md)
+* [Blog](blog/README.md)
+  * [📖 Post 2](blog/post-2.md)
+  * [📖 Post 1](blog/post-1.md)
+
 ## Getting Started
 
-* [Docs Index](README.md)
+* [Docs Index](<README (1).md>)
 * [Getting Started](getting-started/0\_gettingstarted.md)
 * [Under the Hood](getting-started/12\_underthehood.md)
 * [Configuration](getting-started/1\_configuration.md)
@@ -50,7 +56,4 @@
 
 ## API
 
-* [Blog](api/blog/README.md)
-  * [📖 Post 2](api/blog/post-2.md)
-  * [📖 Post 1](api/blog/post-1.md)
 * [API Docs](https://github.com/alchemy-swift/alchemy/wiki)
