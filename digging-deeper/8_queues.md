@@ -1,11 +1,11 @@
 # Queues
 
-- [Configuring Queues](#configuring-queues)
-- [Creating Jobs](#creating-jobs)
-- [Dispatching Jobs](#dispatching-jobs)
-- [Dequeuing and Running Jobs](#dequeuing-and-running-jobs)
-- [Channels](#channels)
-- [Handling Job Failures](#handling-job-failures)
+* [Configuring Queues](8\_queues.md#configuring-queues)
+* [Creating Jobs](8\_queues.md#creating-jobs)
+* [Dispatching Jobs](8\_queues.md#dispatching-jobs)
+* [Dequeuing and Running Jobs](8\_queues.md#dequeuing-and-running-jobs)
+* [Channels](8\_queues.md#channels)
+* [Handling Job Failures](8\_queues.md#handling-job-failures)
 
 Often your app will have long running operations, such as sending emails or reading files, that take too long to run during a client request. To help with this, Alchemy makes it easy to create queued jobs that can be persisted and run in the background. Your requests will stay lightning fast and important long running operations will never be lost if your server restarts or re-deploys.
 
@@ -43,7 +43,6 @@ struct SendWelcomeEmail: Job {
 ```
 
 Note that Rune `Model`s are Codable and can thus be included and persisted as properties of a job.
-
 
 ```swift
 struct ProcessUserTransactions: Job {
@@ -105,7 +104,7 @@ If you don't want to manage another running process, you can pass the `--workers
 swift run MyApp --workers 2
 ```
 
-You can view the various options for the `queues` command in [Configuration](1_Configuration.md#queue).
+You can view the various options for the `queues` command in [Configuration](../getting-started/1\_configuration.md#queue).
 
 ## Channels
 
@@ -147,6 +146,6 @@ struct SyncSubscriptions: Job {
 }
 ```
 
-_Next page: [Cache](9_Cache.md)_
+_Next page:_ [_Cache_](9\_cache.md)
 
-_[Table of Contents](/Docs#docs)_
+[_Table of Contents_](../Docs/#docs)

@@ -1,20 +1,20 @@
-# Redis 
+# Redis
 
-- [Connecting to Redis](#connecting-to-redis)
-    * [Clusters](#clusters)
-- [Interacting With Redis](#interacting-with-redis)
-- [Scripting](#scripting)
-- [Pub / Sub](#pub--sub)
-    * [Wildcard Subscriptions](#wildcard-subscriptions)
-- [Transactions](#transactions)
+* [Connecting to Redis](5d\_redis.md#connecting-to-redis)
+  * [Clusters](5d\_redis.md#clusters)
+* [Interacting With Redis](5d\_redis.md#interacting-with-redis)
+* [Scripting](5d\_redis.md#scripting)
+* [Pub / Sub](5d\_redis.md#pub--sub)
+  * [Wildcard Subscriptions](5d\_redis.md#wildcard-subscriptions)
+* [Transactions](5d\_redis.md#transactions)
 
 Redis is an open source, in-memory data store than can be used as a database, cache, and message broker.
 
-Alchemy provides first class Redis support out of the box, building on the extensive [RediStack](https://github.com/Mordil/RediStack) library. 
+Alchemy provides first class Redis support out of the box, building on the extensive [RediStack](https://github.com/Mordil/RediStack) library.
 
 ## Connecting to Redis
 
-You can connect to Redis using the `Redis` type. You should register this type for injection in your `Application.boot()`. It conforms to `Service` so you can do so with the `config` function. 
+You can connect to Redis using the `Redis` type. You should register this type for injection in your `Application.boot()`. It conforms to `Service` so you can do so with the `config` function.
 
 ```swift
 Redis.config(default: .connection("localhost"))
@@ -58,11 +58,12 @@ redis.set("some_int", to: 42) // EventLoopFuture<Void>
 ```
 
 You can also increment a value.
+
 ```swift
 redis.increment("my_counter") // EventLoopFuture<Int>
 ```
 
-There are convenient extensions for just about every command Redis supports. 
+There are convenient extensions for just about every command Redis supports.
 
 ```swift
 redis.lrange(from: "some_list", indices: 0...3)
@@ -76,9 +77,9 @@ redis.command("lrange", "some_list", 0, 3)
 
 ## Scripting
 
-You can run a script via `.eval(...)`. 
+You can run a script via `.eval(...)`.
 
-Scripts are written in Lua and have access to 1-based arrays `KEYS` and `ARGV` for accessing keys and arguments respectively. They also have access to a `redis` variable for calling Redis inside the script. Consult the [EVAL documentation](https://redis.io/commands/eval) for more information on scripting. 
+Scripts are written in Lua and have access to 1-based arrays `KEYS` and `ARGV` for accessing keys and arguments respectively. They also have access to a `redis` variable for calling Redis inside the script. Consult the [EVAL documentation](https://redis.io/commands/eval) for more information on scripting.
 
 ```swift
 redis.eval(
@@ -97,7 +98,7 @@ redis.eval(
 
 ## Pub / Sub
 
-Redis provides `publish` and `subscribe` commands to publish and listen to various channels. 
+Redis provides `publish` and `subscribe` commands to publish and listen to various channels.
 
 You can easily subscribe to a single channel or multiple channels.
 
@@ -125,7 +126,7 @@ redis.unsubscribe(from: "my-channel")
 
 ### Wildcard Subscriptions
 
-You may subscribe to wildcard channels using `psubscribe`. 
+You may subscribe to wildcard channels using `psubscribe`.
 
 ```swift
 redis.psubscribe(to: ["*"]) { channelName, value in
@@ -156,6 +157,6 @@ redis.transaction { conn in
 }
 ```
 
-_Next page: [Rune Basics](6a_RuneBasics.md)_
+_Next page:_ [_Rune Basics_](../rune-orm/6a\_runebasics.md)
 
-_[Table of Contents](/Docs#docs)_
+[_Table of Contents_](../Docs/#docs)

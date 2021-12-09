@@ -1,14 +1,14 @@
-# Database: Basics
+# Getting Started
 
-- [Introduction](#introduction)
-- [Connecting to a Database](#connecting-to-a-database)
-- [Querying data](#querying-data)
-    * [Handling Query Responses](#handling-query-responses)
-    * [Transactions](#transactions)
+* [Introduction](5a\_databasebasics.md#introduction)
+* [Connecting to a Database](5a\_databasebasics.md#connecting-to-a-database)
+* [Querying data](5a\_databasebasics.md#querying-data)
+  * [Handling Query Responses](5a\_databasebasics.md#handling-query-responses)
+  * [Transactions](5a\_databasebasics.md#transactions)
 
 ## Introduction
 
-Alchemy makes interacting with SQL databases a breeze. You can use raw SQL, the fully featured [query builder](5b_DatabaseQueryBuilder.md) or the built in ORM, [Rune](6a_RuneBasics.md).
+Alchemy makes interacting with SQL databases a breeze. You can use raw SQL, the fully featured [query builder](5b\_databasequerybuilder.md) or the built in ORM, [Rune](../rune-orm/6a\_runebasics.md).
 
 ## Connecting to a Database
 
@@ -92,6 +92,6 @@ database.transaction { conn in
 }
 ```
 
-_Next page: [Database: Query Builder](5b_DatabaseQueryBuilder.md)_
+_Next page:_ [_Database: Query Builder_](5b\_databasequerybuilder.md)
 
-_[Table of Contents](/Docs#docs)_
+[_Table of Contents_](../Docs/#docs)

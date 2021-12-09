@@ -1,12 +1,12 @@
-# Routing: Middleware
+# Middleware
 
-- [Creating Middleware](#creating-middleware)
-  * [Accessing the `Request`](#accessing-the-request)
-  * [Setting Data on a Request](#setting-data-on-a-request)
-  * [Accessing the `Response`](#accessing-the--response-)
-- [Adding Middleware to Your Application](#adding-middleware-to-your-application)
-  * [Global Intercepting](#global-intercepting)
-  * [Specific Intercepting](#specific-intercepting)
+* [Creating Middleware](3b\_routingmiddleware.md#creating-middleware)
+  * [Accessing the `Request`](3b\_routingmiddleware.md#accessing-the-request)
+  * [Setting Data on a Request](3b\_routingmiddleware.md#setting-data-on-a-request)
+  * [Accessing the `Response`](3b\_routingmiddleware.md#accessing-the--response-)
+* [Adding Middleware to Your Application](3b\_routingmiddleware.md#adding-middleware-to-your-application)
+  * [Global Intercepting](3b\_routingmiddleware.md#global-intercepting)
+  * [Specific Intercepting](3b\_routingmiddleware.md#specific-intercepting)
 
 ## Creating Middleware
 
@@ -45,7 +45,7 @@ struct QueryingMiddleware: Middleware {
 
 ### Setting Data on a Request
 
-Sometimes you may want a `Middleware` to add some data to a `Request`. For example, you may want to authenticate an incoming request with a `Middleware` and then add a `User` to it for handlers down the chain to access. 
+Sometimes you may want a `Middleware` to add some data to a `Request`. For example, you may want to authenticate an incoming request with a `Middleware` and then add a `User` to it for handlers down the chain to access.
 
 You can set generic data on a `Request` using `Request.set` and then access it in subsequent `Middleware` or handlers via `Request.get`.
 
@@ -146,6 +146,6 @@ app
     .post("/reset", handler: ...)
 ```
 
-_Next page: [Papyrus](4_Papyrus.md)_
+_Next page:_ [_Papyrus_](4\_papyrus.md)
 
-_[Table of Contents](/Docs#docs)_
+[_Table of Contents_](../Docs/#docs)

@@ -1,24 +1,25 @@
-# Database: Migrations
+# Migrations
 
-- [Creating a migration](#creating-a-migration)
-- [Implementing Migrations](#implementing-migrations)
-- [Schema functions](#schema-functions)
-- [Creating a table](#creating-a-table)
-  * [Adding Columns](#adding-columns)
-  * [Adding Indexes](#adding-indexes)
-- [Altering a Table](#altering-a-table)
-- [Other schema functions](#other-schema-functions)
-- [Running a Migration](#running-a-migration)
-  * [Via Command](#via-command)
-    + [Applying](#applying)
-    + [Rolling Back](#rolling-back)
-  * [Via Code](#via-code)
-    + [Applying](#applying-1)
-    + [Rolling Back](#rolling-back-1)
+* [Creating a migration](5c\_databasemigrations.md#creating-a-migration)
+* [Implementing Migrations](5c\_databasemigrations.md#implementing-migrations)
+* [Schema functions](5c\_databasemigrations.md#schema-functions)
+* [Creating a table](5c\_databasemigrations.md#creating-a-table)
+  * [Adding Columns](5c\_databasemigrations.md#adding-columns)
+  * [Adding Indexes](5c\_databasemigrations.md#adding-indexes)
+* [Altering a Table](5c\_databasemigrations.md#altering-a-table)
+* [Other schema functions](5c\_databasemigrations.md#other-schema-functions)
+* [Running a Migration](5c\_databasemigrations.md#running-a-migration)
+  * [Via Command](5c\_databasemigrations.md#via-command)
+    * [Applying](5c\_databasemigrations.md#applying)
+    * [Rolling Back](5c\_databasemigrations.md#rolling-back)
+  * [Via Code](5c\_databasemigrations.md#via-code)
+    * [Applying](5c\_databasemigrations.md#applying-1)
+    * [Rolling Back](5c\_databasemigrations.md#rolling-back-1)
 
 Migrations are a key part of working with an SQL database. Each migration defines changes to the schema of your database that can be either applied or rolled back. You'll typically create new migrations each time you want to make a change to your database, so that you can keep track of all the changes you've made over time.
 
 ## Creating a migration
+
 You can create a new migration using the CLI.
 
 ```bash
@@ -29,7 +30,7 @@ This will create a new migration file in `Sources/App/Migrations`.
 
 ## Implementing Migrations
 
-A migration conforms to the `Migration` protocol and is implemented by filling out the `up` and `down` functions. `up` is run when a migration is applied to a database. `down` is run when a migration is rolled back. 
+A migration conforms to the `Migration` protocol and is implemented by filling out the `up` and `down` functions. `up` is run when a migration is applied to a database. `down` is run when a migration is rolled back.
 
 `up` and `down` are passed a `Schema` object representing the schema of the database to which this migration will be applied. The database schema is modified via functions on `Schema`.
 
@@ -72,16 +73,16 @@ You may add a column onto a table builder with functions like `.string()` or `.i
 
 Supported builder functions for adding columns are
 
-| Table Builder Functions | Column Builder Functions |
-|-|-|
-| `.uuid(_ column: String)` | `.default(expression: String)` |
-| `.int(_ column: String)` | `.default(val: String)` |
-| `.string(_ column: String)` | `.notNull()` |
-| `.increments(_ column: String)` | `.unique()` |
-| `.double(_ column: String)` | `.primary()` |
-| `.bool(_ column: String)` | `.references(_ column: String, on table: String)` |
-| `.date(_ column: String)` |
-| `.json(_ column: String)` |
+| Table Builder Functions         | Column Builder Functions                          |
+| ------------------------------- | ------------------------------------------------- |
+| `.uuid(_ column: String)`       | `.default(expression: String)`                    |
+| `.int(_ column: String)`        | `.default(val: String)`                           |
+| `.string(_ column: String)`     | `.notNull()`                                      |
+| `.increments(_ column: String)` | `.unique()`                                       |
+| `.double(_ column: String)`     | `.primary()`                                      |
+| `.bool(_ column: String)`       | `.references(_ column: String, on table: String)` |
+| `.date(_ column: String)`       |                                                   |
+| `.json(_ column: String)`       |                                                   |
 
 ### Adding Indexes
 
@@ -182,6 +183,6 @@ Rolling back the latest migration batch is also possible in code.
 database.rollbackMigrations()
 ```
 
-_Next page: [Redis](5d_Redis.md)_
+_Next page:_ [_Redis_](5d\_redis.md)
 
-_[Table of Contents](/Docs#docs)_
+[_Table of Contents_](../Docs/#docs)

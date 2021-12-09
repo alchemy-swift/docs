@@ -1,14 +1,14 @@
-# Rune: Relationships
+# Relationships
 
-- [Relationship Types](#relationship-types)
-    * [BelongsTo](#belongsto)
-    * [HasMany](#hasmany)
-    * [HasOne](#hasone)
-    * [HasMany through](#hasmany-through)
-    * [HasOne through](#hasone-through)
-    * [ManyToMany](#manytomany)
-- [Eager Loading Relationships](#eager-loading-relationships)
-    * [Nested Eager Loading](#nested-eager-loading)
+* [Relationship Types](6b\_runerelationships.md#relationship-types)
+  * [BelongsTo](6b\_runerelationships.md#belongsto)
+  * [HasMany](6b\_runerelationships.md#hasmany)
+  * [HasOne](6b\_runerelationships.md#hasone)
+  * [HasMany through](6b\_runerelationships.md#hasmany-through)
+  * [HasOne through](6b\_runerelationships.md#hasone-through)
+  * [ManyToMany](6b\_runerelationships.md#manytomany)
+* [Eager Loading Relationships](6b\_runerelationships.md#eager-loading-relationships)
+  * [Nested Eager Loading](6b\_runerelationships.md#nested-eager-loading)
 
 Relationships are an important part of an SQL database. Rune provides first class support for defining, keeping track of, and loading relationships between records.
 
@@ -111,7 +111,7 @@ workflows
     - project_id
 ```
 
-Given a user, you could access their workflows, through the project table by using the `through(...)` function. 
+Given a user, you could access their workflows, through the project table by using the `through(...)` function.
 
 ```swift
 struct User: Model {
@@ -166,7 +166,7 @@ struct Todo: Model {
 }
 ```
 
-Like `through`, keys are inferred but you may specify `from` and `to` parameters to indicate the keys on the pivot table. 
+Like `through`, keys are inferred but you may specify `from` and `to` parameters to indicate the keys on the pivot table.
 
 ```swift
 struct Todo: Model {
@@ -244,6 +244,6 @@ Homework.query()
     }
 ```
 
-_Next page: [Security](7_Security.md)_
+_Next page:_ [_Security_](../digging-deeper/7\_security.md)
 
-_[Table of Contents](/Docs#docs)_
+[_Table of Contents_](../Docs/#docs)

@@ -1,14 +1,14 @@
 # Cache
 
-- [Configuration](#configuration)
-- [Interacting with the Cache](#interacting-with-the-cache)
-  * [Storing Items in the Cache](#storing-items-in-the-cache)
-    + [Storing Custom Types](#storing-custom-types)
-  * [Retreiving Cache Items](#retreiving-cache-items)
-    + [Checking for item existence](#checking-for-item-existence)
-    + [Incrementing and Decrementing items](#incrementing-and-decrementing-items)
-  * [Removing Items from the Cache](#removing-items-from-the-cache)
-- [Adding a Custom Cache Provider](#adding-a-custom-cache-provider)
+* [Configuration](9\_cache.md#configuration)
+* [Interacting with the Cache](9\_cache.md#interacting-with-the-cache)
+  * [Storing Items in the Cache](9\_cache.md#storing-items-in-the-cache)
+    * [Storing Custom Types](9\_cache.md#storing-custom-types)
+  * [Retreiving Cache Items](9\_cache.md#retreiving-cache-items)
+    * [Checking for item existence](9\_cache.md#checking-for-item-existence)
+    * [Incrementing and Decrementing items](9\_cache.md#incrementing-and-decrementing-items)
+  * [Removing Items from the Cache](9\_cache.md#removing-items-from-the-cache)
+* [Adding a Custom Cache Provider](9\_cache.md#adding-a-custom-cache-provider)
 
 You'll often want to cache the results of expensive or long running operations to save CPU time and respond to future requests faster. Alchemy provides a `Cache` type for easily interacting with common caching backends.
 
@@ -156,6 +156,6 @@ extension Cache {
 Cache.config(default: .memcached())
 ```
 
-_Next page: [Commands](13_Commands.md)_
+_Next page:_ [_Commands_](13\_commands.md)
 
-_[Table of Contents](/Docs#docs)_
+[_Table of Contents_](../Docs/#docs)

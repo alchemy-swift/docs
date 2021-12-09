@@ -1,13 +1,13 @@
-# Security
+# Authorization
 
-- [Bcrypt](#bcrypt)
-- [Request Auth](#request-auth)
-  * [Authorization: Basic](#authorization-basic)
-  * [Authorization: Bearer](#authorization-bearer)
-  * [Authorization: Either](#authorization-either)
-- [Auth Middleware](#auth-middleware)
-  * [Basic Auth Middleware](#basic-auth-middleware)
-  * [Token Auth Middleware](#token-auth-middleware)
+* [Bcrypt](7\_security.md#bcrypt)
+* [Request Auth](7\_security.md#request-auth)
+  * [Authorization: Basic](7\_security.md#authorization-basic)
+  * [Authorization: Bearer](7\_security.md#authorization-bearer)
+  * [Authorization: Either](7\_security.md#authorization-either)
+* [Auth Middleware](7\_security.md#auth-middleware)
+  * [Basic Auth Middleware](7\_security.md#basic-auth-middleware)
+  * [Token Auth Middleware](7\_security.md#token-auth-middleware)
 
 Alchemy provides built in support for Bcrypt hashing and automatic authentication via Rune & `Middleware`.
 
@@ -38,7 +38,7 @@ Bcrypt.verifyAsync("password", hashedPassword)
 
 ## Request Auth
 
-`Request` makes it easy to pull `Authorization` information off an incoming request. 
+`Request` makes it easy to pull `Authorization` information off an incoming request.
 
 ### Authorization: Basic
 
@@ -155,6 +155,6 @@ struct UserToken: Model, BasicAuthable {
 }
 ```
 
-_Next page: [Queues](8_Queues.md)_
+_Next page:_ [_Queues_](8\_queues.md)
 
-_[Table of Contents](/Docs#docs)_
+[_Table of Contents_](../Docs/#docs)

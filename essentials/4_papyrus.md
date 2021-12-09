@@ -1,25 +1,25 @@
 # Papyrus
 
-- [Installation](#installation)
-    * [Server](#server)
-    * [Shared Library](#shared-library)
-    * [iOS / macOS](#ios---macos)
-- [Usage](#usage)
-    * [Defining APIs](#defining-apis)
-        + [Basics](#basics)
-        + [Supported Methods](#supported-methods)
-        + [Empty Request or Reponse](#empty-request-or-reponse)
-        + [Custom Request Data](#custom-request-data)
-            - [URLQuery](#urlquery)
-            - [Header](#header)
-            - [Path Parameters](#path-parameters)
-            - [Body](#body)
-            - [Combinations](#combinations)
-    * [Requesting APIs](#requesting-apis)
-        + [Client, via Alamofire](#client-via-alamofire)
-        + [Server, via AsyncHTTPClient](#server-via-asynchttpclient)
-    * [Providing APIs](#providing-apis)
-    * [Interceptors](#interceptors)
+* [Installation](4\_papyrus.md#installation)
+  * [Server](4\_papyrus.md#server)
+  * [Shared Library](4\_papyrus.md#shared-library)
+  * [iOS / macOS](4\_papyrus.md#ios---macos)
+* [Usage](4\_papyrus.md#usage)
+  * [Defining APIs](4\_papyrus.md#defining-apis)
+    * [Basics](4\_papyrus.md#basics)
+    * [Supported Methods](4\_papyrus.md#supported-methods)
+    * [Empty Request or Reponse](4\_papyrus.md#empty-request-or-reponse)
+    * [Custom Request Data](4\_papyrus.md#custom-request-data)
+      * [URLQuery](4\_papyrus.md#urlquery)
+      * [Header](4\_papyrus.md#header)
+      * [Path Parameters](4\_papyrus.md#path-parameters)
+      * [Body](4\_papyrus.md#body)
+      * [Combinations](4\_papyrus.md#combinations)
+  * [Requesting APIs](4\_papyrus.md#requesting-apis)
+    * [Client, via Alamofire](4\_papyrus.md#client-via-alamofire)
+    * [Server, via AsyncHTTPClient](4\_papyrus.md#server-via-asynchttpclient)
+  * [Providing APIs](4\_papyrus.md#providing-apis)
+  * [Interceptors](4\_papyrus.md#interceptors)
 
 Papyrus is a helper library for defining network APIs in Swift.
 
@@ -63,7 +63,7 @@ Papyrus is used to define, request, and provide HTTP endpoints.
 
 #### Basics
 
-A single endpoint is defined with the `Endpoint<Request, Response>` type. 
+A single endpoint is defined with the `Endpoint<Request, Response>` type.
 
 `Endpoint.Request` represents the data needed to make this request, and `Endpoint.Response` represents the expected return data from this request. Note that `Request` must conform to `RequestComponents` and `Response` must conform to `Codable`.
 
@@ -89,19 +89,22 @@ class TodosAPI: EndpointGroup {
 }
 ```
 
-Notice a few things about the `getAll` endpoint. 
+Notice a few things about the `getAll` endpoint.
 
-1. The `@GET("/todos")` indicates that the endpoint is at `POST {some_base_url}/todos`. 
+1. The `@GET("/todos")` indicates that the endpoint is at `POST {some_base_url}/todos`.
 2. The endpoint expects a request object of `GetUsersRequest` which conforms to `RequestComponents` and contains two properties, wrapped by `@URLQuery`. The `URLQuery` wrappers indicate data that's expected in the query url of the request. This lets requesters of this endpoint know that the endpoint needs two query values, `limit` and `incompleteOnly`. It also lets the providers of this endpoint know that incoming requests to `GET /todo` will contain two items in their query URLs; `limit` and `incompleteOnly`.
 3. The endpoint has a response type of `[TodoDTO]`, defined below it. This lets clients know what response type to expect and lets providers know what response type to return.
 
 This gives anyone reading or using the API all the information they would need to interact with it.
 
 Requesting this endpoint might look like
+
 ```
 GET {some_base_url}/todos?limit=1&incompleteOnly=0 
 ```
+
 While a response would look like
+
 ```json
 [
     {
@@ -141,15 +144,15 @@ class SomeAPI: EndpointGroup {
 
 #### Custom Request Data
 
-Like `@URLQuery`, there are other property wrappers to define where on an HTTP request data should be. 
+Like `@URLQuery`, there are other property wrappers to define where on an HTTP request data should be.
 
 Each wrapper denotes a value in the request at the proper location with a key of the name of the property. For example `@Header var someHeader: String` indicates requests to this endpoint should have a header named `someHeader`.
 
 **Note**: `@Body` ignore's its property name and instead encodes it's value into the entire request body.
 
-##### URLQuery
+**URLQuery**
 
-`@URLQuery` can wrap a `Bool`, `String`, `String?`, `Int`, `Int?` or `[String]`. 
+`@URLQuery` can wrap a `Bool`, `String`, `String?`, `Int`, `Int?` or `[String]`.
 
 Optional properties with nil values will be omitted.
 
@@ -167,7 +170,7 @@ struct QueryRequest: RequestComponents {
 }
 ```
 
-##### Header
+**Header**
 
 `@Header` can wrap a `String`. It indicates that there should be a header of name `{propertyName}` on the request.
 
@@ -183,7 +186,7 @@ struct HeaderRequest: RequestComponents {
 }
 ```
 
-##### Path Parameters
+**Path Parameters**
 
 `@Path` can wrap a `String`. It indicates a dynamic path parameter at `:{propertyName}` in the request path.
 
@@ -198,7 +201,7 @@ struct PathRequest: RequestComponents {
 }
 ```
 
-##### Body
+**Body**
 
 `@Body` can wrap any `Codable` type which will be encoded to the request. By default, the body is encoded as JSON, but you may override `RequestComponents.contentType` to use another encoding type.
 
@@ -238,7 +241,7 @@ struct JSONBody: RequestBody {
 }
 ```
 
-##### Combinations
+**Combinations**
 
 You can combine any number of these property wrappers, except for `@Body`. There can only be a single `@Body` per request.
 
@@ -288,6 +291,7 @@ todosAPI.getAll
 ```
 
 This would make a request that looks like:
+
 ```
 GET http://localhost:3000/todos?limit=50&incompleteOnly=false
 ```
@@ -313,7 +317,7 @@ router.on(todos.getAll) { (request: Request, data: GetTodosRequest) in
 }
 ```
 
-This will automatically parse the relevant `GetTodosRequest` data from the right places (URL query, headers, body, path parameters) on the incoming request. In this case, "limit" & "incompleteOnly" from the request query `String`. 
+This will automatically parse the relevant `GetTodosRequest` data from the right places (URL query, headers, body, path parameters) on the incoming request. In this case, "limit" & "incompleteOnly" from the request query `String`.
 
 If expected data is missing, a `400` is thrown describing the missing expected fields:
 
@@ -342,6 +346,6 @@ final class TodoAPI: EndpointGroup {
 }
 ```
 
-_Next page: [Database: Basics](5a_DatabaseBasics.md)_
+_Next page:_ [_Database: Basics_](../database/5a\_databasebasics.md)
 
-_[Table of Contents](/Docs#docs)_
+[_Table of Contents_](../Docs/#docs)

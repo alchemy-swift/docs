@@ -1,9 +1,9 @@
-# Services & Dependency Injection
+# Service Container
 
-- [Registering and Injecting Services](#registering-and-injecting-services)
-  * [Registering Defaults](#registering-defaults)
-  * [Registering Additional Instances](#registering-additional-instances)
-- [Mocking](#mocking)
+* [Registering and Injecting Services](2\_fusion.md#registering-and-injecting-services)
+  * [Registering Defaults](2\_fusion.md#registering-defaults)
+  * [Registering Additional Instances](2\_fusion.md#registering-additional-instances)
+* [Mocking](2\_fusion.md#mocking)
 
 Alchemy handles dependency injection using [Fusion](https://github.com/alchemy-swift/fusion). In addition to Fusion APIs, it includes a `Service` protocol to make it easy to inject common Alchemy such as `Database`, `Redis` and `Queue`.
 
@@ -15,7 +15,7 @@ For example, you likely want to use an SQL database in your app. You can use the
 
 ### Registering Defaults
 
-Services typically have static provider functions to your configure defaults. In this case, the `.postgres()` function helps create a PostgreSQL database provider. 
+Services typically have static provider functions to your configure defaults. In this case, the `.postgres()` function helps create a PostgreSQL database provider.
 
 ```swift
 Database.config(
@@ -78,6 +78,6 @@ final class RouterTests: XCTestCase {
 }
 ```
 
-_Next page: [Routing: Basics](3a_RoutingBasics.md)_
+_Next page:_ [_Routing: Basics_](../essentials/3a\_routingbasics.md)
 
-_[Table of Contents](/Docs#docs)_
+[_Table of Contents_](../Docs/#docs)

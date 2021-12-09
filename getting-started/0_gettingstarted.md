@@ -1,9 +1,9 @@
 # Getting Started
 
-- [Installation](#installation)
-  * [CLI](#cli)
-  * [Swift Package Manager](#swift-package-manager)
-- [Start Coding](#start-coding)
+* [Installation](0\_gettingstarted.md#installation)
+  * [CLI](0\_gettingstarted.md#cli)
+  * [Swift Package Manager](0\_gettingstarted.md#swift-package-manager)
+* [Start Coding](0\_gettingstarted.md#start-coding)
 
 ## Installation
 
@@ -15,7 +15,7 @@ The Alchemy CLI is installable with [Mint](https://github.com/yonaskolb/Mint).
 mint install alchemy-swift/alchemy-cli
 ```
 
-Creating an app with the CLI will let you pick between a backend or fullstack (`iOS` frontend, `Alchemy` backend, `Shared` library) project. 
+Creating an app with the CLI will let you pick between a backend or fullstack (`iOS` frontend, `Alchemy` backend, `Shared` library) project.
 
 1. `alchemy new MyNewProject`
 2. `cd MyNewProject` (if you selected fullstack, `MyNewProject/Backend`)
@@ -57,6 +57,6 @@ Run your app with `swift run` and visit `localhost:3000` in the browser to see y
 
 Congrats, you're off to the races! Check out the rest of the guides for what you can do with Alchemy.
 
-_Up next: [Architecture](1_Configuration.md)_
+_Up next:_ [_Architecture_](1\_configuration.md)
 
-_[Table of Contents](/Docs#docs)_
+[_Table of Contents_](../Docs/#docs)

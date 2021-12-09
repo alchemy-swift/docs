@@ -1,11 +1,11 @@
 # Deploying
 
-- [DigitalOcean](#digitalocean)
-  * [Install Swift](#install-swift)
-  * [Run Your App](#run-your-app)
-- [Docker](#docker)
-  * [Create a Dockerfile](#create-a-dockerfile)
-  * [Build and deploy the image](#build-and-deploy-the-image)
+* [DigitalOcean](11\_deploying.md#digitalocean)
+  * [Install Swift](11\_deploying.md#install-swift)
+  * [Run Your App](11\_deploying.md#run-your-app)
+* [Docker](11\_deploying.md#docker)
+  * [Create a Dockerfile](11\_deploying.md#create-a-dockerfile)
+  * [Build and deploy the image](11\_deploying.md#build-and-deploy-the-image)
 
 While there are many ways to deploy your Alchemy app, this guide focuses on deploying to a Linux machine with DigitalOcean and deploying with Docker.
 
@@ -34,12 +34,14 @@ tar xzf swift-5.4.2-RELEASE-ubuntu20.04.tar.gz
 ```
 
 Put Swift somewhere easy to link to, such as a folder `/swift/{version}`.
+
 ```swift
 sudo mkdir /swift
 sudo mv swift-5.4.2-RELEASE-ubuntu20.04 /swift/5.4.2
 ```
 
 Then create a link in `/usr/bin`.
+
 ```shell
 sudo ln -s /swift/5.4.2/usr/bin/swift /usr/bin/swift
 ```
@@ -61,6 +63,7 @@ git clone <project>
 ```
 
 Make sure to allow HTTP through your droplet's firewall
+
 ```
 sudo ufw allow http
 ```
@@ -73,13 +76,14 @@ swift run --enable-test-discovery Backend --host <droplet-public-ip> --port 80
 ```
 
 Assuming you had something like this in your `Application.boot`
+
 ```swift
 get("/hello") {
     "Hello, World!"
 }
 ```
 
-Visit `<droplet-public-ip>/hello` in your browser and you should see 
+Visit `<droplet-public-ip>/hello` in your browser and you should see
 
 ```
 Hello, World!
@@ -132,7 +136,7 @@ Finally, run the built image. Pass in `-d` to tell Docker to run your image in t
 docker run -d -p 3000:3000 ab21d0f26ecd
 ```
 
-Visit `http://0.0.0.0:3000/hello` in the browser and you should see 
+Visit `http://0.0.0.0:3000/hello` in the browser and you should see
 
 ```
 Hello, World!
@@ -140,6 +144,6 @@ Hello, World!
 
 Awesome! You're ready to deploy with Docker.
 
-_Up next: [Under The Hood](12_UnderTheHood.md)_
+_Up next:_ [_Under The Hood_](12\_underthehood.md)
 
-_[Table of Contents](/Docs#docs)_
+[_Table of Contents_](../Docs/#docs)

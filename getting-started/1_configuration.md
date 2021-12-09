@@ -1,15 +1,15 @@
 # Configuration
 
-- [Run Commands](#run-commands)
-  * [`serve`](#serve)
-  * [`migrate`](#migrate)
-  * [`queue`](#queue)
-- [Environment](#environment)
-  * [Dynamic Member Lookup](#dynamic-member-lookup)
-  * [.env File](#env-file)
-  * [Custom Environments](#custom-environments)
-- [Working with Xcode](#working-with-xcode)
-  * [Setting a Custom Working Directory](#setting-a-custom-working-directory)
+* [Run Commands](1\_configuration.md#run-commands)
+  * [`serve`](1\_configuration.md#serve)
+  * [`migrate`](1\_configuration.md#migrate)
+  * [`queue`](1\_configuration.md#queue)
+* [Environment](1\_configuration.md#environment)
+  * [Dynamic Member Lookup](1\_configuration.md#dynamic-member-lookup)
+  * [.env File](1\_configuration.md#env-file)
+  * [Custom Environments](1\_configuration.md#custom-environments)
+* [Working with Xcode](1\_configuration.md#working-with-xcode)
+  * [Setting a Custom Working Directory](1\_configuration.md#setting-a-custom-working-directory)
 
 ## Run Commands
 
@@ -25,42 +25,42 @@ swift run Server migrate
 
 Each command has options for customizing how it runs. If you're running your app from Xcode, you can configure launch arguments by editing the current scheme and navigating to `Run` -> `Arguments`.
 
-If you're looking to extend your Alchemy app with your own custom commands, check out [Commands](13_Commands.md).
+If you're looking to extend your Alchemy app with your own custom commands, check out [Commands](../digging-deeper/13\_commands.md).
 
 ### Serve
 
 > `swift run` or `swift run Server serve`
 
-|Option|Default|Description|
-|-|-|-|
-|--host|127.0.0.1|The host to listen on|
-|--port|3000|The port to listen on|
-|--unixSocket|nil|The unix socket to listen on. Mutually exclusive with `host` & `port`|
-|--workers|0|The number of workers to run|
-|--schedule|false|Whether scheduled tasks should be scheduled|
-|--migrate|false|Whether any outstanding migrations should be run before serving|
-|--env|env|The environment to load|
+| Option       | Default   | Description                                                           |
+| ------------ | --------- | --------------------------------------------------------------------- |
+| --host       | 127.0.0.1 | The host to listen on                                                 |
+| --port       | 3000      | The port to listen on                                                 |
+| --unixSocket | nil       | The unix socket to listen on. Mutually exclusive with `host` & `port` |
+| --workers    | 0         | The number of workers to run                                          |
+| --schedule   | false     | Whether scheduled tasks should be scheduled                           |
+| --migrate    | false     | Whether any outstanding migrations should be run before serving       |
+| --env        | env       | The environment to load                                               |
 
 ### Migrate
 
 > `swift run Server migrate`
 
-|Option|Default|Description|
-|-|-|-|
-|--rollback|false|Should migrations be rolled back instead of applied|
-|--env|env|The environment to load|
+| Option     | Default | Description                                         |
+| ---------- | ------- | --------------------------------------------------- |
+| --rollback | false   | Should migrations be rolled back instead of applied |
+| --env      | env     | The environment to load                             |
 
 ### Queue
 
 > `swift run Server queue`
 
-|Option|Default|Description|
-|-|-|-|
-|--name|`nil`|The queue to monitor. Leave empty to monitor `Queue.default`|
-|--channels|`default`|The channels to monitor, separated by comma|
-|--workers|1|The number of workers to run|
-|--schedule|false|Whether scheduled tasks should be scheduled|
-|--env|env|The environment to load|
+| Option     | Default   | Description                                                  |
+| ---------- | --------- | ------------------------------------------------------------ |
+| --name     | `nil`     | The queue to monitor. Leave empty to monitor `Queue.default` |
+| --channels | `default` | The channels to monitor, separated by comma                  |
+| --workers  | 1         | The number of workers to run                                 |
+| --schedule | false     | Whether scheduled tasks should be scheduled                  |
+| --env      | env       | The environment to load                                      |
 
 ## Environment
 
@@ -123,7 +123,7 @@ If you have separate environment variables for different server configurations (
 
 ## Configuring Your Server
 
-There are a couple of options available for configuring how your server is running. By default, the server runs over `HTTP/1.1`. 
+There are a couple of options available for configuring how your server is running. By default, the server runs over `HTTP/1.1`.
 
 ### Enable TLS
 
@@ -159,6 +159,6 @@ By default, Xcode builds and runs your project in a **DerivedData** folder, sepa
 
 To solve this, edit your server target's scheme & change the working directory to your package's root folder. `Edit Scheme` -> `Run` -> `Options` -> `WorkingDirectory`.
 
-_Up next: [Services & Dependency Injection](2_Fusion.md)_
+_Up next:_ [_Services & Dependency Injection_](2\_fusion.md)
 
-_[Table of Contents](/Docs#docs)_
+[_Table of Contents_](../Docs/#docs)

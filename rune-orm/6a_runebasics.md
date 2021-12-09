@@ -1,26 +1,26 @@
-# Rune: Basics
+# Getting Started
 
-- [Creating a Model](#creating-a-model)
-- [Custom Table Names](#custom-table-names)
-    * [Custom Key Mappings](#custom-key-mappings)
-- [Model Field Types](#model-field-types)
-    * [Basic Types](#basic-types)
-    * [Advanced Types](#advanced-types)
-        + [Enums](#enums)
-        + [JSON](#json)
-        + [Custom JSON Encoders](#custom-json-encoders)
-        + [Custom JSON Decoders](#custom-json-decoders)
-- [Decoding from `SQLRow`](#decoding-from-sqlrow)
-- [Model Querying](#model-querying)
-    * [All Models](#all-models)
-    * [First Model](#first-model)
-    * [Quick Lookups](#quick-lookups)
-- [Model CRUD](#model-crud)
-    * [Get All](#get-all)
-    * [Save](#save)
-    * [Delete](#delete)
-    * [Sync](#sync)
-    * [Bulk Operations](#bulk-operations)
+* [Creating a Model](6a\_runebasics.md#creating-a-model)
+* [Custom Table Names](6a\_runebasics.md#custom-table-names)
+  * [Custom Key Mappings](6a\_runebasics.md#custom-key-mappings)
+* [Model Field Types](6a\_runebasics.md#model-field-types)
+  * [Basic Types](6a\_runebasics.md#basic-types)
+  * [Advanced Types](6a\_runebasics.md#advanced-types)
+    * [Enums](6a\_runebasics.md#enums)
+    * [JSON](6a\_runebasics.md#json)
+    * [Custom JSON Encoders](6a\_runebasics.md#custom-json-encoders)
+    * [Custom JSON Decoders](6a\_runebasics.md#custom-json-decoders)
+* [Decoding from `SQLRow`](6a\_runebasics.md#decoding-from-sqlrow)
+* [Model Querying](6a\_runebasics.md#model-querying)
+  * [All Models](6a\_runebasics.md#all-models)
+  * [First Model](6a\_runebasics.md#first-model)
+  * [Quick Lookups](6a\_runebasics.md#quick-lookups)
+* [Model CRUD](6a\_runebasics.md#model-crud)
+  * [Get All](6a\_runebasics.md#get-all)
+  * [Save](6a\_runebasics.md#save)
+  * [Delete](6a\_runebasics.md#delete)
+  * [Sync](6a\_runebasics.md#sync)
+  * [Bulk Operations](6a\_runebasics.md#bulk-operations)
 
 Alchemy includes Rune, an object-relational mapper (ORM) to make it simple to interact with your database. With Rune, each database table has a corresponding `Model` type that is used to interact with that table. Use this Model type for querying, inserting, updating or deleting from the table.
 
@@ -71,7 +71,7 @@ struct User: Model {
 
 ### Basic Types
 
-Models support most basic Swift types such as `String`, `Bool`, `Int`, `Double`, `UUID`, `Date`. Under the hood, these are mapped to relevant types on the concrete `Database` you are using. 
+Models support most basic Swift types such as `String`, `Bool`, `Int`, `Double`, `UUID`, `Date`. Under the hood, these are mapped to relevant types on the concrete `Database` you are using.
 
 ### Advanced Types
 
@@ -182,7 +182,7 @@ let users = User.query().allModels()
 
 ### All Models
 
-`.allModels()` returns an EventLoopFuture<[M]> containing all `Model`s that matched the query.
+`.allModels()` returns an EventLoopFuture<\[M]> containing all `Model`s that matched the query.
 
 ```swift
 User.query()
@@ -308,6 +308,6 @@ usersToDelete.deleteAll()
     }
 ```
 
-_Next page: [Rune: Relationships](6b_RuneRelationships.md)_
+_Next page:_ [_Rune: Relationships_](6b\_runerelationships.md)
 
-_[Table of Contents](/Docs#docs)_
+[_Table of Contents_](../Docs/#docs)

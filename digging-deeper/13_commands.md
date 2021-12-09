@@ -1,15 +1,15 @@
 # Commands
 
-- [Writing a custom Command](#writing-a-custom-command)
-  * [Adding Options, Flags, and help info](#adding-options-flags-and-help-info)
-  * [Printing help info](#printing-help-info)
-- [`make` Commands](#make-commands)
+* [Writing a custom Command](13\_commands.md#writing-a-custom-command)
+  * [Adding Options, Flags, and help info](13\_commands.md#adding-options-flags-and-help-info)
+  * [Printing help info](13\_commands.md#printing-help-info)
+* [`make` Commands](13\_commands.md#make-commands)
 
 Often, you'll want to run specific tasks around maintenance, cleanup or productivity for your Alchemy app.
 
 The `Command` interface makes this a cinche, allowing you to create custom commands to run your application with. It's built on the powerful [Swift Argument Parser](https://github.com/apple/swift-argument-parser) making it easy to add arguments, options, flags and help functionality to your custom commands. All commands have access to services registered in `Application.boot` so it's easy to interact with whatever database, queues, & other functionality that your app already has.
 
-## Writing a custom Command 
+## Writing a custom Command
 
 To create a command, conform to the `Command` protocol, implement `func start()`, and register it with `app.registerCommand(...)`. Now, when you run your Alchemy app you may pass your custom command name as an argument to execute it.
 
@@ -132,7 +132,6 @@ $ swift run Server make:model Todo id:increments:primary name:string is_done:boo
 
 Like all commands, you may view the details & arguments of each make command with `swift run MyApp help <command>`.
 
+_Next page:_ [_Digging Deeper_](10\_diggingdeeper.md)
 
-_Next page: [Digging Deeper](10_DiggingDeeper.md)_
-
-_[Table of Contents](/Docs#docs)_
+[_Table of Contents_](../Docs/#docs)

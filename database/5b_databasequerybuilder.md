@@ -1,33 +1,34 @@
-# Database: Query Builder
+# Query Builder
 
-- [Running Database Queries](#running-database-queries)
-  * [Starting a query chain](#starting-a-query-chain)
-  * [Get all rows](#get-all-rows)
-  * [Get a single row](#get-a-single-row)
-- [Select](#select)
-  * [Picking columns to return](#picking-columns-to-return)
-- [Joins](#joins)
-- [Where Clauses](#where-clauses)
-  * [Basic Where Clauses](#basic-where-clauses)
-  * [Or Where Clauses](#or-where-clauses)
-  * [Grouping Where Clauses](#grouping-where-clauses)
-  * [Additional Where Clauses](#additional-where-clauses)
-    + [Where Null](#where-null)
-    + [Where In](#where-in)
-- [Ordering, Grouping, Paging](#ordering-grouping-paging)
-  * [Grouping](#grouping)
-  * [Ordering](#ordering)
-  * [Paging, Limits and Offsets](#paging-limits-and-offsets)
-- [Inserting](#inserting)
-- [Updating](#updating)
-- [Deleting](#deleting)
-- [Counting](#counting)
+* [Running Database Queries](5b\_databasequerybuilder.md#running-database-queries)
+  * [Starting a query chain](5b\_databasequerybuilder.md#starting-a-query-chain)
+  * [Get all rows](5b\_databasequerybuilder.md#get-all-rows)
+  * [Get a single row](5b\_databasequerybuilder.md#get-a-single-row)
+* [Select](5b\_databasequerybuilder.md#select)
+  * [Picking columns to return](5b\_databasequerybuilder.md#picking-columns-to-return)
+* [Joins](5b\_databasequerybuilder.md#joins)
+* [Where Clauses](5b\_databasequerybuilder.md#where-clauses)
+  * [Basic Where Clauses](5b\_databasequerybuilder.md#basic-where-clauses)
+  * [Or Where Clauses](5b\_databasequerybuilder.md#or-where-clauses)
+  * [Grouping Where Clauses](5b\_databasequerybuilder.md#grouping-where-clauses)
+  * [Additional Where Clauses](5b\_databasequerybuilder.md#additional-where-clauses)
+    * [Where Null](5b\_databasequerybuilder.md#where-null)
+    * [Where In](5b\_databasequerybuilder.md#where-in)
+* [Ordering, Grouping, Paging](5b\_databasequerybuilder.md#ordering-grouping-paging)
+  * [Grouping](5b\_databasequerybuilder.md#grouping)
+  * [Ordering](5b\_databasequerybuilder.md#ordering)
+  * [Paging, Limits and Offsets](5b\_databasequerybuilder.md#paging-limits-and-offsets)
+* [Inserting](5b\_databasequerybuilder.md#inserting)
+* [Updating](5b\_databasequerybuilder.md#updating)
+* [Deleting](5b\_databasequerybuilder.md#deleting)
+* [Counting](5b\_databasequerybuilder.md#counting)
 
 Alchemy offers first class support for building and running database queries through a chaining query builder. It can be used for the majority of database operations, otherwise you can always run pure SQL as well. The syntax is heavily inspired by Knex and Laravel.
 
 ## Running Database Queries
 
 ### Starting a query chain
+
 To start fetching records, you can begin a chain a number of different ways. Each will start a query builder chain that you can then build out.
 
 ```swift
@@ -39,6 +40,7 @@ database.query().from("users") // Start a query using a database variable on tab
 ```
 
 ### Get all rows
+
 ```swift
 Query.from("users")
   .get()
@@ -46,9 +48,10 @@ Query.from("users")
 
 ### Get a single row
 
-If you are only wanting to select a single row from the database table, you have a few different options. 
+If you are only wanting to select a single row from the database table, you have a few different options.
 
 To select the first row only from a query, use the `first` method.
+
 ```swift
 Query.from("users")
   .where("name", "Steve")
@@ -56,6 +59,7 @@ Query.from("users")
 ```
 
 If you want to get a single record based on a given column, you can use the `find` method. This will return the first record matching the criteria.
+
 ```swift
 Query.from("users")
   .find()
@@ -67,7 +71,7 @@ Query.from("users")
 
 Sometimes you may want to select just a subset of columns to return. While the `find` and `get` methods can take a list of columns to limit down to, you can always explicitly call `select`.
 
-```swift 
+```swift
 Query.from("users")
   .select(["first_name", "last_name"])
   .get()
@@ -188,7 +192,7 @@ Query.from("users")
 
 ### Ordering
 
-You can sort results of a query by using the `orderBy` method. 
+You can sort results of a query by using the `orderBy` method.
 
 ```swift
 Query.from("users")
@@ -216,6 +220,7 @@ Query.from("users")
 ```
 
 Otherwise, you can also define limits and offsets manually:
+
 ```swift
 Query.from("users")
   .offset(50)
@@ -259,7 +264,7 @@ Query.table("users")
 
 ## Counting
 
-To get the total number of records that match a query you can use the `count` method. 
+To get the total number of records that match a query you can use the `count` method.
 
 ```swift
 Query.from("rentals")
@@ -267,6 +272,6 @@ Query.from("rentals")
   .count(as: "rentals_count")
 ```
 
-_Next page: [Database: Migrations](5c_DatabaseMigrations.md)_
+_Next page:_ [_Database: Migrations_](5c\_databasemigrations.md)
 
-_[Table of Contents](/Docs#docs)_
+[_Table of Contents_](../Docs/#docs)

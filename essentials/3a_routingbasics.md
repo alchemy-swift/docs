@@ -1,16 +1,16 @@
-# Routing: Basics
+# Routing
 
-- [Handling Requests](#handling-requests)
-- [ResponseEncodable](#responseencodable)
-  * [Anything `Codable`](#anything-codable)
-  * [a `Response`](#a-response)
-  * [`Void`](#void)
-  * [Futures that result in a `ResponseConvertible` value](#futures-that-result-in-a-responseconvertible-value)
-  * [Chaining Requests](#chaining-requests)
-- [Controller](#controller)
-- [Errors](#errors)
-- [Path parameters](#path-parameters)
-- [Accessing request data](#accessing-request-data)
+* [Handling Requests](3a\_routingbasics.md#handling-requests)
+* [ResponseEncodable](3a\_routingbasics.md#responseencodable)
+  * [Anything `Codable`](3a\_routingbasics.md#anything-codable)
+  * [a `Response`](3a\_routingbasics.md#a-response)
+  * [`Void`](3a\_routingbasics.md#void)
+  * [Futures that result in a `ResponseConvertible` value](3a\_routingbasics.md#futures-that-result-in-a-responseconvertible-value)
+  * [Chaining Requests](3a\_routingbasics.md#chaining-requests)
+* [Controller](3a\_routingbasics.md#controller)
+* [Errors](3a\_routingbasics.md#errors)
+* [Path parameters](3a\_routingbasics.md#path-parameters)
+* [Accessing request data](3a\_routingbasics.md#accessing-request-data)
 
 ## Handling Requests
 
@@ -66,7 +66,7 @@ app.get("/response") { _ in
 
 ### `Void`
 
-```swift 
+```swift
 app.get("/testing_query") { request in
     print("Got params \(request.queryItems)")
 }
@@ -84,7 +84,7 @@ func loadTodosFromDatabase() -> EventLoopFuture<[Todo]> {
 }
 ```
 
-*Note* an `EventLoopFuture<T>` is the Swift server world's version of a future. See [Under the Hood](12_UnderTheHood.md).
+_Note_ an `EventLoopFuture<T>` is the Swift server world's version of a future. See [Under the Hood](../getting-started/12\_underthehood.md).
 
 ### Chaining Requests
 
@@ -134,11 +134,11 @@ struct App: Application {
 
 ## Errors
 
-Routing in Alchemy is heavily integrated with Swift's built in error handling. [Middleware](3b_RoutingMiddleware.md) & handlers allow for synchronous or asynchronous code to `throw`.
+Routing in Alchemy is heavily integrated with Swift's built in error handling. [Middleware](3b\_routingmiddleware.md) & handlers allow for synchronous or asynchronous code to `throw`.
 
 If an error is thrown or an `EventLoopFuture` results in an error, it will be caught & mapped to a `Response`.
 
-Generic errors will result in an `Response` with a status code of 500, but if any error that conforms to `ResponseConvertible` is thrown, it will be converted as such. 
+Generic errors will result in an `Response` with a status code of 500, but if any error that conforms to `ResponseConvertible` is thrown, it will be converted as such.
 
 Out of the box `HTTPError` conforms to `ResponseConvertible`. If it is thrown, the response will contain the status code & message of the `HTTPError`.
 
@@ -201,6 +201,6 @@ app.post("/users/:userID") { req in
 }
 ```
 
-_Next page: [Routing: Middleware](3b_RoutingMiddleware.md)_
+_Next page:_ [_Routing: Middleware_](3b\_routingmiddleware.md)
 
-_[Table of Contents](/Docs#docs)_
+[_Table of Contents_](../Docs/#docs)
