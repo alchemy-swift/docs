@@ -50,4 +50,7 @@
 
 ## API
 
+* [Blog](api/blog/README.md)
+  * [📖 Post 2](api/blog/post-2.md)
+  * [📖 Post 1](api/blog/post-1.md)
 * [API Docs](https://github.com/alchemy-swift/alchemy/wiki)
