@@ -8,7 +8,6 @@
 
 ## Getting Started
 
-* [Docs Index](<README (1).md>)
 * [Getting Started](getting-started/0\_gettingstarted.md)
 * [Under the Hood](getting-started/12\_underthehood.md)
 * [Configuration](getting-started/1\_configuration.md)
