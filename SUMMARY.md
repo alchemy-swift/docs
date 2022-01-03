@@ -8,49 +8,49 @@
 
 ## Getting Started
 
-* [Getting Started](getting-started.md)
-* [Under the Hood](under-the-hood.md)
-* [Configuration](configuration.md)
-* [Environment](environment.md)
-* [Service Container](fusion.md)
-* [Deploying](deploying.md)
+* [Getting Started](docs/getting-started.md)
+* [Under the Hood](docs/under-the-hood.md)
+* [Configuration](docs/configuration.md)
+* [Environment](docs/environment.md)
+* [Service Container](docs/fusion.md)
+* [Deploying](docs/deploying.md)
 
 ## Essentials
 
-* [Routing](routing.md)
-* [Middleware](middleware.md)
-* [Requests](requests.md)
-* [Responses](responses.md)
+* [Routing](docs/routing.md)
+* [Middleware](docs/middleware.md)
+* [Requests](docs/requests.md)
+* [Responses](docs/responses.md)
 
 ## Digging Deeper
 
-* [Authorization](authorization.md)
-* [Cache](cache.md)
-* [Commands](commands.md)
-* [Digging Deeper](digging-deeper.md)
-* [File Storage](storage.md)
-* [HTTP Client](http-client.md)
-* [Queues](queues.md)
-* [Server Configuration](server-configuration.md)
+* [Authorization](docs/authorization.md)
+* [Cache](docs/cache.md)
+* [Commands](docs/commands.md)
+* [Digging Deeper](docs/digging-deeper.md)
+* [File Storage](docs/storage.md)
+* [HTTP Client](docs/http-client.md)
+* [Queues](docs/queues.md)
+* [Server Configuration](docs/server-configuration.md)
 
 ## Database
 
-* [Getting Started](database.md)
-* [Query Builder](query-builder.md)
-* [Migrations](migrations.md)
-* [Seeding](seeding.md)
-* [Redis](redis.md)
+* [Getting Started](docs/database.md)
+* [Query Builder](docs/query-builder.md)
+* [Migrations](docs/migrations.md)
+* [Seeding](docs/seeding.md)
+* [Redis](docs/redis.md)
 
 ## Rune ORM
 
-* [Getting Started](rune.md)
-* [Relationships](relationships.md)
+* [Getting Started](docs/rune.md)
+* [Relationships](docs/relationships.md)
 
 ## Testing
 
-* [Getting Started](testing.md)
-* [HTTP Tests](http-tests.md)
-* [Mocking](mocking.md)
+* [Getting Started](docs/testing.md)
+* [HTTP Tests](docs/http-tests.md)
+* [Mocking](docs/mocking.md)
 
 ## API
 
