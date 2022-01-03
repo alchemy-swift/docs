@@ -1,10 +1,10 @@
 # Table of contents
 
 * [Welcome](README.md)
-* [Tutorial](tutorial.md)
-* [Blog](blog/README.md)
+<!-- * [Tutorial](tutorial.md) -->
+<!-- * [Blog](blog/README.md)
   * [📖 Post 2](blog/post-2.md)
-  * [📖 Post 1](blog/post-1.md)
+  * [📖 Post 1](blog/post-1.md) -->
 
 ## Getting Started
 
@@ -51,6 +51,11 @@
 * [Getting Started](docs/testing.md)
 * [HTTP Tests](docs/http-tests.md)
 * [Mocking](docs/mocking.md)
+
+## Supporting Libraries
+
+* [Papyrus](docs/papyrus.md)
+* [Fusion](docs/fusion.md)
 
 ## API
 

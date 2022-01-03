@@ -17,13 +17,13 @@ struct App: Application {
 
 Alchemy provides you with Swifty APIs for everything you need to build production-ready backends. It makes writing your backend in Swift a breeze by easing typical tasks, such as:
 
-- [Simple, fast routing engine](Docs/3a_RoutingBasics.md).
-- [Powerful dependency injection container](Docs/2_Fusion.md).
-- Expressive, Swifty [database ORM](Docs/6a_RuneBasics.md).
-- Database agnostic [query builder](Docs/5b_DatabaseQueryBuilder.md) and [schema migrations](Docs/5c_DatabaseMigrations.md).
-- [Robust job queues backed by Redis or SQL](Docs/8_Queues.md).
+- [Simple, fast routing engine](docs/routing.md).
+- [Powerful dependency injection container](docs/fusion.md).
+- Expressive, Swifty [database ORM](docs/rune.md).
+- Database agnostic [query builder](docs/query-builder.md) and [schema migrations](docs/migrations.md).
+- [Robust job queues backed by Redis or SQL](docs/queues.md).
 - First class support for [Plot](https://github.com/JohnSundell/Plot), a typesafe HTML DSL.
-- [Supporting libraries to share typesafe backend APIs with Swift frontends](Docs/4_Papyrus.md).
+- [Supporting libraries to share typesafe backend APIs with Swift frontends](docs/papyrus.md).
 
 ## Why Alchemy?
 
@@ -51,4 +51,5 @@ Swift is built to write concice, safe and elegant code. Alchemy leverages it's b
 
 # Get Started
 
-To get started, check out [Getting Started](docs/getting-started.md) or the [Tutorial](other/tutorial.md)
+To get started check out the extensive docs starting with [Getting Started](docs/getting-started.md).
+
