@@ -1,11 +1,5 @@
 <p align="center"><img src="https://user-images.githubusercontent.com/6025554/132588005-5f8a6a94-ec15-4cab-9be9-1e90e86d374f.png" width="400"></a></p>
 
-<p align="center">
-<a href="https://swift.org"><img src="https://img.shields.io/badge/Swift-5.4-orange.svg" alt="Swift Version"></a>
-<a href="https://github.com/alchemy-swift/alchemy/releases"><img src="https://img.shields.io/github/release/alchemy-swift/alchemy.svg" alt="Latest Release"></a>
-<a href="https://github.com/alchemy-swift/alchemy/blob/main/LICENSE"><img src="https://img.shields.io/github/license/alchemy-swift/alchemy.svg" alt="License"></a>
-</p>
-
 Welcome to Alchemy, an elegant, batteries included backend framework for Swift. You can use it to build a production ready backend for your next mobile app, cloud project or website.
 
 ```swift
