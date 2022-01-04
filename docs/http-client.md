@@ -188,23 +188,75 @@ let config = HTTPClient.Configuration(...)
 let response = try await Http.withClientConfig(config).get(...)
 ```
 
-## Validating Responses
-
 ## Testing
 
-### Asserts
+To help you write isolated, expressive tests, the `Client` interface includes a `stub()` method allowing you to respond to requests with mock responses.
 
-### Stubbing
+### Stubbing Responses
+
+To return a `200` for all outgoing requests on a client, you may use the `stub()` function.
 
 ```swift
+Http.stub()
+
+let response = try await Http.get(...) // 200 with empty body
+```
+
+#### Stubbing Specific URLs
+
+If you'd like to provide custom stubbed responses for specific URLs, you may pass a dictionary of url patterns & responses to the `stub()` method. If a request doesn't match any of the provided patterns, it will result in a `200` response. `*` is treated as a wildcard. The static `stub()` function on `Client.Response` lets you quickly create stubbed responses.
+
+```swift
+Http.stub([
+    // Stub a string response for all facebook.com endpoints
+    "facebook.com/*": .stub(.ok, body: "Hello There!"),
+
+    // Stub a json response for all Stripe endpoints
+    "api.stripe.com/*": .stub(.ok, body: .json([
+        "foo": "value",
+        "bar": 1,
+    ])),
+])
+```
+
+#### Stubbing With A Handler
+
+If you'd prefer fine grain control over stubbing each request's response, you may pass a closure to the stub function. With it, you can perform whatever logic you need to mock the given request. It take a single `Client.Request` parameter and must return a `Client.Response`.
+
+```swift
+Http.stub { request in
+    return .stub(.ok, body: "Hello from \(request.path)!")
+}
+```
+
+### Validating Requests
+
+If you'd like to validate the requests your app is making during testing, you may use the `assertSent()` function in the `AlchemyTest` library. It takes an optional count of expected requests, as well as an optional closure for verifying the request contents. When verifying the request, you may use the `RequestInspector` interface as well as the `hasPath()`, `hasHeader()`, `hasPath()`, and `hasMethod()` sugar functions.
+
+```swift
+import AlchemyTest
+
+Http.mock()
+
+let body = User(name: "Cyanea", age: 34)
 Http
-    .get(url: "https://swift.org")
-    .whenComplete { result in
-        switch result {
-        case .failure(let error):
-            ...
-        case .success(let response):
-            ...
-        }
-    }
+    .withHeader("X-Foo", value: "bar")
+    .withJson(body)
+    .post("https://example.com/users")
+
+Http.assertSent(1) {
+    $0.hasPath("/users") && 
+    $0.hasMethod(.POST) && 
+    $0.hasHeader("X-Foo", value: "bar") &&
+    $0["name"] == "Cyanea" &&
+    $0["age"] == 34
+}
+```
+
+If you'd like to assert that nothing was sent, use the `assertNothingSent()` function.
+
+```swift
+Http.mock()
+
+Http.assertNothingSent()
 ```
