@@ -1,61 +1,84 @@
-# Configuration
+# Server Configuration
 
-* [Run Commands](1\_configuration.md#run-commands)
-  * [`serve`](1\_configuration.md#serve)
-  * [`migrate`](1\_configuration.md#migrate)
-  * [`queue`](1\_configuration.md#queue)
+## Environment
 
-## Run Commands
+Often you'll need to access environment variables of the running program. To do so, use the `Env` type.
 
-When Alchemy is run, it takes an argument that determines how it behaves on launch. When no argument is passed, the default command is `serve` which boots the app and serves it on the machine.
-
-There are also `migrate` and `queue` commands which help run migrations and queue workers/schedulers respectively.
-
-You can run these like so.
-
-```shell
-swift run Server migrate
+```swift
+// The type is inferred
+let envBool: Bool? = Env.current.get("SOME_BOOL")
+let envInt: Int? = Env.current.get("SOME_INT")
+let envString: String? = Env.current.get("SOME_STRING")
 ```
 
-Each command has options for customizing how it runs. If you're running your app from Xcode, you can configure launch arguments by editing the current scheme and navigating to `Run` -> `Arguments`.
+### Dynamic member lookup
 
-If you're looking to extend your Alchemy app with your own custom commands, check out [Commands](../digging-deeper/13\_commands.md).
+If you're feeling fancy, `Env` supports dynamic member lookup.
 
-### Serve
+```swift
+let db: String? = Env.DB_DATABASE
+let dbUsername: String? = Env.DB_USER
+let dbPass: String? = Env.DB_PASS
+```
 
-> `swift run` or `swift run Server serve`
+### .env file
 
-| Option       | Default   | Description                                                           |
-| ------------ | --------- | --------------------------------------------------------------------- |
-| --host       | 127.0.0.1 | The host to listen on                                                 |
-| --port       | 3000      | The port to listen on                                                 |
-| --unixSocket | nil       | The unix socket to listen on. Mutually exclusive with `host` & `port` |
-| --workers    | 0         | The number of workers to run                                          |
-| --schedule   | false     | Whether scheduled tasks should be scheduled                           |
-| --migrate    | false     | Whether any outstanding migrations should be run before serving       |
-| --env        | env       | The environment to load                                               |
+By default, environment variables are loaded from the process as well as the file `.env` if it exists in the working directory of your project.
 
-### Migrate
+Inside your `.env` file, keys & values are separated with an `=`.
 
-> `swift run Server migrate`
+```bash
+# A sample .env file (a file literally titled ".env" in the working directory)
 
-| Option     | Default | Description                                         |
-| ---------- | ------- | --------------------------------------------------- |
-| --rollback | false   | Should migrations be rolled back instead of applied |
-| --env      | env     | The environment to load                             |
+APP_NAME=Alchemy
+APP_ENV=local
+APP_KEY=
+APP_DEBUG=true
+APP_URL=http://localhost
 
-### Queue
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=5432
+DB_DATABASE=alchemy
+DB_USER=josh
+DB_PASS=password
 
-> `swift run Server queue`
+REDIS_HOST=127.0.0.1
+REDIS_PASSWORD=null
+REDIS_PORT=6379
 
-| Option     | Default   | Description                                                  |
-| ---------- | --------- | ------------------------------------------------------------ |
-| --name     | `nil`     | The queue to monitor. Leave empty to monitor `Queue.default` |
-| --channels | `default` | The channels to monitor, separated by comma                  |
-| --workers  | 1         | The number of workers to run                                 |
-| --schedule | false     | Whether scheduled tasks should be scheduled                  |
-| --env      | env       | The environment to load                                      |
+AWS_ACCESS_KEY_ID=
+AWS_SECRET_ACCESS_KEY=
+AWS_DEFAULT_REGION=us-east-1
+AWS_BUCKET=
+```
 
-_Up next:_ [_Services & Dependency Injection_](2\_fusion.md)
+### Custom Environments
 
-[_Table of Contents_](../Docs/#docs)
+You can load your environment from another location by passing your app the `--env` option.
+
+If you have separate environment variables for different server configurations (i.e. local dev, staging, production), you can pass your program a separate `--env` for each configuration so the right environment is loaded.
+
+There are a couple of options available for configuring how your server is running. By default, the server runs over `HTTP/1.1`.
+
+## Enable TLS
+
+You can enable running over TLS with `useHTTPS`.
+
+```swift
+func boot() throws {
+    try useHTTPS(key: "/path/to/private-key.pem", cert: "/path/to/cert.pem")
+}
+```
+
+## Enable HTTP/2
+
+You may also configure your server with `HTTP/2` upgrades (will prefer `HTTP/2` but still accept `HTTP/1.1` over TLS). To do this use `useHTTP2`.
+
+```swift
+func boot() throws {
+    try useHTTP2(key: "/path/to/private-key.pem", cert: "/path/to/cert.pem")
+}
+```
+
+Note that the `HTTP/2` protocol is only supported over TLS, and so implies using it. Thus, there's no need to call both `useHTTPS` and `useHTTP2`; `useHTTP2` sets up both TLS and `HTTP/2` support.

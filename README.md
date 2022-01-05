@@ -43,15 +43,18 @@ With Routing, an ORM, advanced Redis & SQL support, Authentication, Queues, Cron
 
 APIs focus on simple syntax with lots of baked in convention so you can build much more with less code. This doesn't mean you can't customize; there's always an escape hatch to configure things your own way.
 
-**3. Ease of Use** 
+**3. Rapid Development**
 
-A fully documented codebase organized in a single repo make it easy to get building, extending and contributing.
+Alchemy is designed to help you take apps from idea to implementation as swiftly as possible.
 
-**4. Keep it Swifty** 
+**4. Interoperability**
 
-Swift is built to write concice, safe and elegant code. Alchemy leverages it's best parts to help you write great code faster and obviate entire classes of backend bugs.
+Alchemy is built on top of the lightweight, [blazingly](https://web-frameworks-benchmark.netlify.app/result?l=swift) fast [Hummingbird](https://github.com/hummingbird-project/hummingbird) framework. It is fully compatible with existing `swift-nio` and `vapor` components like [stripe-kit](https://github.com/vapor-community/stripe-kit), [soto](https://github.com/soto-project/soto) and even [fluent-kit](https://github.com/vapor/fluent-kit) so that you can easily integrate with all existing Swift on the Server work.
+
+**5. Keep it Swifty** 
+
+Swift is built to write concice, safe and elegant code. Alchemy leverages it's best parts to help you write great code faster and obviate entire classes of backend bugs. With v0.4.0 and above, it's API is completely `async/await` meaning you have access to all Swift's cutting edge concurrency features.
 
 # Get Started
 
 To get started check out the extensive docs starting with [Getting Started](docs/getting-started.md).
-

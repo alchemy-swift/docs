@@ -9,11 +9,10 @@
 ## Getting Started
 
 * [Getting Started](docs/getting-started.md)
-* [Under the Hood](docs/under-the-hood.md)
 * [Configuration](docs/configuration.md)
-* [Environment](docs/environment.md)
 * [Service Container](docs/fusion.md)
 * [Deploying](docs/deploying.md)
+* [Interoperability](docs/interoperability.md)
 
 ## Essentials
 
@@ -22,17 +21,18 @@
 * [Controllers](docs/controllers.md)
 * [Requests](docs/requests.md)
 * [Responses](docs/responses.md)
+* [Views](docs/views.md)
+* [Logging](docs/logging.md)
 
 ## Digging Deeper
 
 * [Authorization](docs/authorization.md)
 * [Cache](docs/cache.md)
 * [Commands](docs/commands.md)
-* [Digging Deeper](docs/digging-deeper.md)
 * [File Storage](docs/storage.md)
 * [HTTP Client](docs/http-client.md)
 * [Queues](docs/queues.md)
-* [Server Configuration](docs/server-configuration.md)
+* [Task Scheduling](docs/scheduling.md)
 
 ## Database
 

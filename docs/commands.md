@@ -1,15 +1,81 @@
 # Commands
 
-* [Writing a custom Command](13\_commands.md#writing-a-custom-command)
-  * [Adding Options, Flags, and help info](13\_commands.md#adding-options-flags-and-help-info)
-  * [Printing help info](13\_commands.md#printing-help-info)
-* [`make` Commands](13\_commands.md#make-commands)
+## Introduction
 
 Often, you'll want to run specific tasks around maintenance, cleanup or productivity for your Alchemy app.
 
 The `Command` interface makes this a cinche, allowing you to create custom commands to run your application with. It's built on the powerful [Swift Argument Parser](https://github.com/apple/swift-argument-parser) making it easy to add arguments, options, flags and help functionality to your custom commands. All commands have access to services registered in `Application.boot` so it's easy to interact with whatever database, queues, & other functionality that your app already has.
 
-## Writing a custom Command
+## Included Commands
+
+### Run Commands
+
+When Alchemy is run, it takes an argument that determines how it behaves on launch. When no argument is passed, the default command is `serve` which boots the app and serves it on the machine.
+
+There are also `migrate` and `queue` commands which help run migrations and queue workers/schedulers respectively.
+
+You can run these like so.
+
+```shell
+swift run Server migrate
+```
+
+Each command has options for customizing how it runs. If you're running your app from Xcode, you can configure launch arguments by editing the current scheme and navigating to `Run` -> `Arguments`.
+
+If you're looking to extend your Alchemy app with your own custom commands, check out [Commands](../digging-deeper/13\_commands.md).
+
+#### Serve
+
+> `swift run` or `swift run Server serve`
+
+| Option       | Default   | Description                                                           |
+| ------------ | --------- | --------------------------------------------------------------------- |
+| --host       | 127.0.0.1 | The host to listen on                                                 |
+| --port       | 3000      | The port to listen on                                                 |
+| --unixSocket | nil       | The unix socket to listen on. Mutually exclusive with `host` & `port` |
+| --workers    | 0         | The number of workers to run                                          |
+| --schedule   | false     | Whether scheduled tasks should be scheduled                           |
+| --migrate    | false     | Whether any outstanding migrations should be run before serving       |
+| --env        | env       | The environment to load                                               |
+
+#### Migrate
+
+> `swift run Server migrate`
+
+| Option     | Default | Description                                         |
+| ---------- | ------- | --------------------------------------------------- |
+| --rollback | false   | Should migrations be rolled back instead of applied |
+| --env      | env     | The environment to load                             |
+
+#### Queue
+
+> `swift run Server queue`
+
+| Option     | Default   | Description                                                  |
+| ---------- | --------- | ------------------------------------------------------------ |
+| --name     | `nil`     | The queue to monitor. Leave empty to monitor `Queue.default` |
+| --channels | `default` | The channels to monitor, separated by comma                  |
+| --workers  | 1         | The number of workers to run                                 |
+| --schedule | false     | Whether scheduled tasks should be scheduled                  |
+| --env      | env       | The environment to load                                      |
+
+## `make` Commands
+
+Out of the box, Alchemy includes a variety of commands to boost your productivity and generate commonly used interfaces. These commands are prefaced with `make:`, and you can see all available ones with `swift run MyApp help`.
+
+For example, the `make:model` command makes it easy to generate a model with the given fields. You can event generate a full populated Migration and Controller with CRUD routes by passing the `--migration` and `--controller` flags.
+
+```bash
+$ swift run Server make:model Todo id:increments:primary name:string is_done:bool user_id:bigint:references.users.id --migration --controller
+🧪 create Sources/App/Models/Todo.swift
+🧪 create Sources/App/Migrations/2021_09_24_11_07_02CreateTodos.swift
+          └─ remember to add migration to your database config!
+🧪 create Sources/App/Controllers/TodoController.swift
+```
+
+Like all commands, you may view the details & arguments of each make command with `swift run MyApp help <command>`.
+
+## Writing A Custom Command
 
 To create a command, conform to the `Command` protocol, implement `func start()`, and register it with `app.registerCommand(...)`. Now, when you run your Alchemy app you may pass your custom command name as an argument to execute it.
 
@@ -115,22 +181,6 @@ OPTIONS:
 ```
 
 Note that you can always pass `-e, --env <env-file>` to any command to have it load your environment from a custom env file before running.
-
-## `make` Commands
-
-Out of the box, Alchemy includes a variety of commands to boost your productivity and generate commonly used interfaces. These commands are prefaced with `make:`, and you can see all available ones with `swift run MyApp help`.
-
-For example, the `make:model` command makes it easy to generate a model with the given fields. You can event generate a full populated Migration and Controller with CRUD routes by passing the `--migration` and `--controller` flags.
-
-```bash
-$ swift run Server make:model Todo id:increments:primary name:string is_done:bool user_id:bigint:references.users.id --migration --controller
-🧪 create Sources/App/Models/Todo.swift
-🧪 create Sources/App/Migrations/2021_09_24_11_07_02CreateTodos.swift
-          └─ remember to add migration to your database config!
-🧪 create Sources/App/Controllers/TodoController.swift
-```
-
-Like all commands, you may view the details & arguments of each make command with `swift run MyApp help <command>`.
 
 _Next page:_ [_Digging Deeper_](10\_diggingdeeper.md)
 
