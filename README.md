@@ -49,7 +49,7 @@ Alchemy is designed to help you take apps from idea to implementation as swiftly
 
 **4. Interoperability**
 
-Alchemy is built on top of the lightweight, [blazingly](https://web-frameworks-benchmark.netlify.app/result?l=swift) fast [Hummingbird](https://github.com/hummingbird-project/hummingbird) framework. It is fully compatible with existing `swift-nio` and `vapor` components like [stripe-kit](https://github.com/vapor-community/stripe-kit), [soto](https://github.com/soto-project/soto) and even [fluent-kit](https://github.com/vapor/fluent-kit) so that you can easily integrate with all existing Swift on the Server work.
+Alchemy is built on top of the lightweight, [blazingly](https://web-frameworks-benchmark.netlify.app/result?l=swift) fast [Hummingbird](https://github.com/hummingbird-project/hummingbird) framework. It is fully compatible with existing `swift-nio` and `vapor` components like [stripe-kit](https://github.com/vapor-community/stripe-kit), [soto](https://github.com/soto-project/soto) or [jwt-kit](https://github.com/vapor/jwt-kit) so that you can easily integrate with all existing Swift on the Server work.
 
 **5. Keep it Swifty** 
 

@@ -15,25 +15,19 @@ Alchemy provides built in support for Bcrypt hashing and automatic authenticatio
 
 Standard practice is to never store plain text passwords in your database. Bcrypt is a password hashing function that creates a one way hash of a plaintext password. It's an expensive process CPU-wise, so it will help protect your passwords from being easily cracked through brute forcing.
 
-It's simple to use.
+It's simple to use, and runs asynchronously so as not to block the current thread.
 
 ```swift
-let hashedPassword = Bcrypt.hash("password")
-let isPasswordValid = Bcrypt.verify("password", hashedPassword) // true
+let hashedPassword = try await Bcrypt.hash("password")
+
+let isMatch = try await Bcrypt.verify("password", hashedPassword)
 ```
 
-Because it's expensive, you may want to run this off of an `EventLoop` thread. For convenience, there's an API for that. This will run Bcrypt on a separate thread and complete back on the initiating `EventLoop`.
+If you'd rather run Bcrypt synchronously and block the current thread until it's finished, you may use `hashSync()` or `verifySync()`.
 
 ```swift
-Bcrypt.hashAsync("password")
-    .whenSuccess { hashedPassword in
-        // do something with the hashed password
-    }
-
-Bcrypt.verifyAsync("password", hashedPassword)
-    .whenSuccess { isMatch in
-        print("Was a match? \(isMatch).")
-    }
+let hashedPassword = Bcrypt.hashSync("password")
+let isPasswordValid = Bcrypt.verifySync("password", hashedPassword) // true
 ```
 
 ## Request Auth
@@ -71,7 +65,7 @@ let request: Request = ...
 if let auth = request.getAuth() {
     switch auth {
     case .bearer(let bearer):
-        print("Request had Basic auth!")
+        print("Request had Bearer auth!")
     case .basic(let basic):
         print("Request had Basic auth!")
     }
@@ -135,8 +129,8 @@ struct UserToken: Model, BasicAuthable {
 Like with `Basic` auth, put the `UserToken.tokenAuthMiddleware()` in front of endpoints that are protected by bearer authorization. The `Middleware` will automatically parse out tokens from incoming `Request`s and validate them via the `UserToken` type. If the token matches a `UserToken` row, the related `User` and `UserToken` will be `.set()` on the `Request` for access in a handler.
 
 ```swift
-router.middleWare(UserToken.tokenAuthMiddleware())
-    .on(.GET, at: "/todos") { req in
+router.use(UserToken.tokenAuthMiddleware())
+    .get("/todos") { req in
         let authedUser = try req.get(User.self)
         let theToken = try req.get(UserToken.self)
     }
@@ -154,7 +148,3 @@ struct UserToken: Model, BasicAuthable {
     @BelongsTo var user: User
 }
 ```
-
-_Next page:_ [_Queues_](8\_queues.md)
-
-[_Table of Contents_](../Docs/#docs)
