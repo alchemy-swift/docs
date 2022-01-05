@@ -8,9 +8,9 @@
 
 ## Getting Started
 
-* [Getting Started](docs/getting-started.md)
+* [Installation](docs/installation.md)
 * [Configuration](docs/configuration.md)
-* [Service Container](docs/fusion.md)
+* [Service Container](docs/services.md)
 * [Deploying](docs/deploying.md)
 * [Interoperability](docs/interoperability.md)
 
