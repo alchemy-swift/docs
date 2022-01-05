@@ -99,39 +99,6 @@ app
     .delete("/user", handler: controller.delete)
 ```
 
-## Controller
-
-For convenience, a protocol `Controller` is provided to help break up your route handlers. Implement the `route(_ app: Application)` function and register it in your `Application.boot`.
-
-```swift
-struct UserController: Controller {
-    func route(_ app: Application) {
-        app.post("/create", handler: create)
-            .post("/reset", handler: reset)
-            .post("/login", handler: login)
-    }
-
-    func create(req: Request) -> String {
-        "Greetings from user create!"
-    }
-
-    func reset(req: Request) -> String {
-        "Howdy from user reset!"
-    }
-
-    func login(req: Request) -> String {
-        "Yo from user login!"
-    }
-}
-
-struct App: Application {
-    func boot() {
-        ...
-        controller(UserController())
-    }
-}
-```
-
 ## Errors
 
 Routing in Alchemy is heavily integrated with Swift's built in error handling. [Middleware](3b\_routingmiddleware.md) & handlers allow for synchronous or asynchronous code to `throw`.

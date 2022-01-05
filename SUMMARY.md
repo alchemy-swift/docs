@@ -19,6 +19,7 @@
 
 * [Routing](docs/routing.md)
 * [Middleware](docs/middleware.md)
+* [Controllers](docs/controllers.md)
 * [Requests](docs/requests.md)
 * [Responses](docs/responses.md)
 

@@ -282,7 +282,7 @@ let contentType = request.file("photo").contentType
 
 ### Storing Uploaded Files
 
-To store an uploaded file, you'll want to put it in one of your [filesystems](docs/storage.md). You can use File's `store()` function to do so easily. It accepts an optional directory to put the file in, as well as an optional id of the filesystem to store in. By default, it will be stored in your default filesystem.
+To store an uploaded file, you'll want to put it in one of your [filesystems](storage.md). You can use File's `store()` function to do so easily. It accepts an optional directory to put the file in, as well as an optional id of the filesystem to store in. By default, it will be stored in your default filesystem.
 
 ```swift
 try await request.file("photo").store()

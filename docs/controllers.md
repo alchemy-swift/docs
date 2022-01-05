@@ -1,0 +1,36 @@
+# Controller
+
+Often, you'll end up with a lot of route handlers and want to logically isolate them from each other. For convenience, a `Controller` protocol is provided to help you do so. Implement the `route(_ app: Application)` method and register the controller in your `Application.boot`.
+
+Any middleware applied during a controller's `route()` will not be applied to handlers outside of this controller.
+
+```swift
+struct UserController: Controller {
+    func route(_ app: Application) {
+        app
+            .use(UserMiddleware())
+            .post("/create", handler: create)
+            .post("/reset", handler: reset)
+            .post("/login", handler: login)
+    }
+
+    func create(req: Request) async throws -> User {
+        //
+    }
+
+    func reset(req: Request) async throws {
+        //
+    }
+
+    func login(req: Request) async throws -> Token {
+        //
+    }
+}
+
+struct App: Application {
+    func boot() {
+        ...
+        controller(UserController())
+    }
+}
+```
