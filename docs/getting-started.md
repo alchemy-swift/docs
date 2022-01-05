@@ -53,6 +53,24 @@ struct App: Application {
 
 Run your app with `swift run` and visit `localhost:3000` in the browser to see your new server in action.
 
+## Editors
+
+### Working with Xcode
+
+You may also use Xcode to run your project to take advantage of all the great tools built into it; debugging, breakpoints, memory graphs, testing, etc.
+
+When working with Xcode be sure to set a custom working directory.
+
+#### Setting a Custom Working Directory
+
+By default, Xcode builds and runs your project in a **DerivedData** folder, separate from the root directory of your project. Unfortunately this means that files your running server may need to access, such as a `.env` file or a `Public` directory, will not be available.
+
+To solve this, edit your server target's scheme & change the working directory to your package's root folder. `Edit Scheme` -> `Run` -> `Options` -> `WorkingDirectory`.
+
+### Working With VSCode
+
+If you'd prefer to develop with VSCode, you should use the official Swift Server [VSCode extension](https://github.com/swift-server/vscode-swift) available on the [VSCode marketplace](https://marketplace.visualstudio.com/items?itemName=sswg.swift-lang).
+
 ## Start Coding!
 
 Congrats, you're off to the races! Check out the rest of the guides for what you can do with Alchemy.
