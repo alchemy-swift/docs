@@ -1,4 +1,4 @@
-# Blog
+# [WIP] Blog
 
 ## Latest Post
 
