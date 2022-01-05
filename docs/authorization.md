@@ -1,15 +1,6 @@
 # Authorization
 
-* [Bcrypt](7\_security.md#bcrypt)
-* [Request Auth](7\_security.md#request-auth)
-  * [Authorization: Basic](7\_security.md#authorization-basic)
-  * [Authorization: Bearer](7\_security.md#authorization-bearer)
-  * [Authorization: Either](7\_security.md#authorization-either)
-* [Auth Middleware](7\_security.md#auth-middleware)
-  * [Basic Auth Middleware](7\_security.md#basic-auth-middleware)
-  * [Token Auth Middleware](7\_security.md#token-auth-middleware)
-
-Alchemy provides built in support for Bcrypt hashing and automatic authentication via Rune & `Middleware`.
+Alchemy provides built in support for Bcrypt hashing and automatic Basic or Token authentication via Rune & `Middleware`.
 
 ## Bcrypt
 
