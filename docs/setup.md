@@ -1,9 +1,4 @@
-# Getting Started
-
-* [Installation](0\_gettingstarted.md#installation)
-  * [CLI](0\_gettingstarted.md#cli)
-  * [Swift Package Manager](0\_gettingstarted.md#swift-package-manager)
-* [Start Coding](0\_gettingstarted.md#start-coding)
+# Setup
 
 ## Installation
 
@@ -74,7 +69,3 @@ If you'd prefer to develop with VSCode, you should use the official Swift Server
 ## Start Coding!
 
 Congrats, you're off to the races! Check out the rest of the guides for what you can do with Alchemy.
-
-_Up next:_ [_Architecture_](1\_configuration.md)
-
-[_Table of Contents_](../Docs/#docs)

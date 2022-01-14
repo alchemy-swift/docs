@@ -8,7 +8,7 @@
 
 ## Getting Started
 
-* [Installation](docs/installation.md)
+* [Setup](docs/setup.md)
 * [Configuration](docs/configuration.md)
 * [Service Container](docs/services.md)
 * [Deploying](docs/deploying.md)

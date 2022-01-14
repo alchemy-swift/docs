@@ -57,4 +57,4 @@ Swift is built to write concice, safe and elegant code. Alchemy leverages it's b
 
 # Get Started
 
-To get started check out the extensive docs starting with [Getting Started](docs/getting-started.md).
+To get started check out the extensive docs starting with [Setup](docs/setup.md).
