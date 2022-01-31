@@ -6,8 +6,6 @@
 <a href="https://github.com/alchemy-swift/alchemy/blob/main/LICENSE"><img src="https://img.shields.io/github/license/alchemy-swift/alchemy.svg" alt="License"></a>
 </p>
 
-# Fusion
-
 Fusion is a lightweight dependency injection library for Swift. It uses property wrappers to make injection a breeze so you can keep your code testable and modular in modern, Swifty style.
 
 ## Why Use Dependency Injection?
