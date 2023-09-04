@@ -38,11 +38,6 @@
             "name": "Discord",
             "icon": "discord",
             "url": "https://discord.gg/cGDC6TK7f5"
-        },
-        {
-            "name": "Blog",
-            "icon": "newspaper",
-            "url": "https://mintlify.com/blog"
         }
     ],
     "navigation": [
@@ -128,5 +123,10 @@
     "footerSocials": {
         "twitter": "https://twitter.com/joshuawright11",
         "github": "https://github.com/alchemy-swift/alchemy"
+    },
+    "feedback": {
+        "thumbsRating": true,
+        "suggestEdit": true,
+        "raiseIssue": true
     }
 }
