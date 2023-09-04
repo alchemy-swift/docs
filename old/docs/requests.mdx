@@ -1,0 +1,291 @@
+## Introduction
+
+The `Request` object encapsulates incoming HTTP requests to your Alchemy app. It provides a variety of ways to interact with each request's content, queries, files, and more. We will discuss a few of the most important methods below.
+
+## Inspecting the Request
+
+A `Request` object is passed to the handlers of each route you define on your app.
+
+```swift
+app.get("/") { request in
+    let name = request["name"].string
+    // ...
+}
+```
+
+### Request Path & Method
+
+Each `Request` instance contains an instance of Foundation's `URLComponents` as well as an `HTTPMethod`, `urlComponents` and `method`, respectively. It also contains a few functions and properties for shorthand access to other common values.
+
+#### Accessing The Request URL
+
+You can access the complete url of the request using the `url` field.
+
+```swift
+let url: URL = request.url
+```
+
+You may also access just the path of the request. In example, the request url is "https://example.com/users/2" `path` will be `/users/2`. Note that path will not include any query from the url.
+
+```swift
+let uri = request.path
+```
+
+#### Accessing Parameters
+
+You'll often have path parameters in your routes, specified on your router by a path component prefixed with a `:`. To quickly access any path parameters on a request, you may use the `parameter()` function.
+
+```swift
+get("/:foo") {
+    let foo = request.parameter("foo")
+}
+```
+
+You may specific the return type to be any implementation of `LosslessStringConvertible` (a type that's initializable from a `String`). This overload of the function has a throwing interface, and will throw if the parameter doesn't exist or isn't convertible.
+
+```swift
+get("/:foo/:bar/:baz/:tiz") {
+    let string = try request.parameter("foo", as: String.self)
+    let int = try request.parameter("bar", as: Int.self)
+    let uuid = try request.parameter("baz", as: UUID.self)
+    let bool = try request.parameter("tiz", as: Bool.self)
+}
+```
+
+If you'd like to iterate over each parameter, you may access the `parameters` property. Each `Parameter` has a `key` and `value`, representing the path placeholder and the actual component string, respectively.
+
+```swift
+for p in request.parameters {
+    print("Parameter \(p.key): \(p.value).")
+}
+```
+
+#### Retreiving The Request Method
+
+You may access the request's method via the `method` property.
+
+```swift
+let method = request.method
+
+if request.method == .POST {
+    //
+}
+```
+
+### Request Headers
+
+You can grab a single header value from a request using the `header()` function.
+
+```swift
+let authorization = request.header("Authorization")
+```
+
+The `header()` function returns the first matching header value, if one exists. If you'd like to access multiple values of the same header, you may use the `headers` parameter, an instance of `HTTPHeaders`.
+
+```swift
+// Loop through all X-Foo headers
+for value in headers["X-Foo"] {
+    print("X-Foo: \(value)")
+}
+
+// Loop through all headers on the request
+for h in headers {
+    print("\(h.name): \(h.value)")
+}
+```
+
+### Retrieving Values From The Query String
+
+Values in the query string is easily accessible via the `query()` function.
+
+```swift
+let page = request.query("page")
+```
+
+### Request IP Address
+
+You may access the remote address of the incoming response via the `remoteAddress` field, an instance of swift-nio's `SocketAddress?`.
+
+```swift
+let socket = request.remoteAddress
+switch socket {
+    case .unixDomainSocket(let path):
+        //
+    case .v4(let ip):
+        //
+    case .v6(let ip):
+        //
+}
+```
+
+If you'd prefer to just access the ip address `String`, use `ip`.
+
+```swift
+let ip = request.ip
+```
+
+## Content
+
+Incoming requests will often have content in the request body. You can access the raw body data via the `request.body` property, but Alchemy includes a few higher level interfaces for interacting with the request content.
+
+### Decoding Codable Types
+
+Typically, incoming requests will have their body encoded in one of a few common encoding standards, as indicated by the `Content-Type` header. Out of the box, Alchemy lets you decode Swift `Codable` types from requests encoded by `multipart/form-data`, `application/x-www-form-urlencoded`, and `application/json`.
+
+```swift
+struct User: Codable {
+    let name: String
+    let age: Int
+    let birthday: Date
+}
+
+let user: User = try jsonEncodedRequest.decode(User.self)
+```
+
+The `decode()` function automatically detects the right decoder to use based on the `Content-Type` header, but you may pass it a specific decoder if you'd like to specify additional options.
+
+```swift
+let formDecoder = URLEncodedFormDecoder(dateDecodingStrategy: .iso8601)
+let user: User = try formEncodedRequest.decode(User.self, with: formDecoder)
+```
+
+#### Writing A Custom Decoder
+
+If you'd like to use the decoding APIs with a unsupported content type, you'll need to write a custom implementation of `ContentDecoder` and pass it to the `decode()` function.
+
+```swift
+struct XMLDecoder: ContentDecoder { ... }
+
+let user: User = xmlEncodedRequest.decode(User.self, with: XMLDecoder())
+```
+
+### Accessing Specific Fields
+
+While decoding can be a great way to quickly validate incoming requests against a complicated schema, it can be brittle and requires a custom type for decoding all types. To simplify cases where you only need a single field or two, you may use the `Content` API, which seamlessly integrates a dictionary-like lookup style and Swift's `Codable`.
+
+#### Retreiving Content At A Specific Path
+
+You may access a request's content with the `content()` function or through subscripting directly on `Request`. Subscripts can be either `String`s for fields or `Int`s for array index access.
+
+```swift
+let page = request.content()["page"]
+let page = request["page"]
+let user = request["users"][0]
+```
+
+You may also use dynamic member lookup.
+
+```swift
+let name = request.users.0.name
+```
+
+#### Checking If A Value Exists
+
+You may confirm that a value exists at the given path using the `exists` property.
+
+```swift
+if request.users[10].exists {
+    //
+}
+```
+
+#### Checking For Null
+
+A value that exists but is `null` can be checked for using the `isNull` property.
+
+```swift
+guard !request.users[0].address.city.isNull else {
+    //
+}
+```
+
+### Retrieving Data
+
+Once you've accessed the content at the proper path, there are a few variables and functions to help convert that data to a desired type.
+
+#### Retreiving A Value
+
+You may retrive a value from the content at a specific path using the `string`, `int`, `bool`, `double`, and `array` properties. Each has a throwing version as well.
+
+```swift
+let name: String? = request.users[0].name.string
+let age: String? = request.users[0].age.int
+let isAdmin: Bool? = request.users[0].isAdmin.bool
+let height: Double? = request.users[0].height.double
+let users: [Content]? = request.users.array
+```
+
+Each property has a throwing version as well that throws if there is an error converting or if the value doesn't exist.
+
+```swift
+let name: String = try request.users[0].name.stringThrowing
+let age: String = try request.users[0].age.intThrowing
+```
+
+#### Decoding A Value
+
+You may also combine the dynamic interface of `Content` with the typesafe interface of `Codable` by calling `decode()` on content at the given path.
+
+```swift
+let user: User = try request.users[0].decode(User.self)
+```
+
+### Dot Notation
+
+When working with content that's an array, you may subscript with the `*` operator to "flatten" it, often called "dot" notation. This returns an array of `Content` and subsequent subscripts will be applied to _each_ element.
+
+```swift
+let userNames: [String]? = request.users[*].name.string
+```
+
+#### Dictionaries / Objects
+
+Dot notation is also applicable to dictionaries/objects in your content, and will map each key/value pair to the value.
+
+```swift
+/*
+ {
+     "foo": "value",
+     "bar": 2,
+     "baz": false,
+ }
+ */
+let request = ...
+
+let values: [Content]? = request[*]
+values![0].string // "value"
+values![1].int // 2
+values![2].bool // false
+```
+
+## Files
+
+### Retrieving Uploaded Files
+
+You may quickly retrieve any files uploaded as part of the request using the `file()` method, or by using the `file`/`fileThrowing` properties on `Content`. These return an instance of type `File` which provides a variety of utilities for interacting with the file.
+
+```swift
+let file: File? = request.file("photo")
+
+let file: File? = request.photo.file
+```
+
+#### Accessing The File Content Type
+
+If the file was uploaded with a `Content-Type` header, you may access it with the `contentType` property.
+
+```swift
+let contentType = request.file("photo").contentType
+```
+
+### Storing Uploaded Files
+
+To store an uploaded file, you'll want to put it in one of your [filesystems](storage.md). You can use File's `store()` function to do so easily. It accepts an optional directory to put the file in, as well as an optional id of the filesystem to store in. By default, it will be stored in your default filesystem.
+
+```swift
+try await request.file("photo").store()
+
+try await request.file("photo").store(in: "users/photos")
+
+try await request.file("photo").store(in: "users/photos", on: .s3)
+```

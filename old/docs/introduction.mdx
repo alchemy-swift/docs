@@ -1,20 +1,35 @@
 ---
-title: Introduction
-description: "Welcome to the home of your new alchemy documentation"
+title: Welcome
+description: "An elegant, batteries included backend framework for Swift."
 ---
 
 <img
     className="block dark:hidden"
-    src="/images/hero-light.svg"
+    src="/images/hero-alchemy.png"
     alt="Hero Light"
 />
 <img
     className="hidden dark:block"
-    src="/images/hero-dark.svg"
+    src="/images/hero-alchemy.png"
     alt="Hero Dark"
 />
 
-## Setting up
+## About
+
+Alchemy provides you with Swifty APIs for everything you need to build production-ready backends. It makes writing your backend in Swift a breeze by easing typical tasks.
+
+```swift
+@main
+struct App: Application {
+    func boot() {
+        get("/") { req in
+            "Hello World!"
+        }
+    }
+}
+```
+
+## Getting Started
 
 The first step to world-class documentation is setting up your editing environnments.
 
@@ -35,7 +50,7 @@ The first step to world-class documentation is setting up your editing environnm
     </Card>
 </CardGroup>
 
-## Make it yours
+## Examples
 
 Update your docs to your brand and add valuable content for the best user conversion.
 

@@ -1,82 +1,132 @@
 {
-  "$schema": "https://mintlify.com/schema.json",
-  "name": "Starter Kit",
-  "logo": {
-    "dark": "/logo/dark.svg",
-    "light": "/logo/light.svg"
-  },
-  "favicon": "/favicon.png",
-  "colors": {
-    "primary": "#9563FF",
-    "light": "#AE87FF",
-    "dark": "#0D001D",
-    "background": {
-      "dark": "#090014"
+    "$schema": "https://mintlify.com/schema.json",
+    "name": "Alchemy",
+    "logo": {
+        "dark": "/logo/dark.svg",
+        "light": "/logo/light.svg"
     },
-    "anchors": {
-      "from": "#FF7F57",
-      "to": "#9563FF"
+    "favicon": "/favicon.png",
+    "colors": {
+        "primary": "#9563FF",
+        "light": "#AE87FF",
+        "dark": "#0D001D",
+        "background": {
+            "dark": "#090014"
+        },
+        "anchors": {
+            "from": "#FF7F57",
+            "to": "#9563FF"
+        }
+    },
+    "topbarLinks": [
+        
+    ],
+    "topbarCtaButton": {
+        "type": "github",
+        "url": "https://github.com/alchemy-swift/alchemy"
+    },
+    "tabs": [
+        
+    ],
+    "anchors": [
+        {
+            "name": "GitHub",
+            "icon": "github",
+            "url": "https://github.com/alchemy-swift/alchemy"
+        },
+        {
+            "name": "Discord",
+            "icon": "discord",
+            "url": "https://discord.gg/cGDC6TK7f5"
+        },
+        {
+            "name": "Blog",
+            "icon": "newspaper",
+            "url": "https://mintlify.com/blog"
+        }
+    ],
+    "navigation": [
+        {
+            "group": "Get Started",
+            "pages": [
+                "old/docs/introduction",
+                "old/docs/setup", 
+                "old/docs/configuration", 
+                "old/docs/services", 
+                "old/docs/deploying", 
+                "old/docs/interoperability"
+            ]
+        },
+        {
+            "group": "Essentials",
+            "pages": [
+                "old/docs/routing", 
+                "old/docs/middleware", 
+                "old/docs/controllers", 
+                "old/docs/requests", 
+                "old/docs/responses", 
+                "old/docs/views", 
+                "old/docs/logging"
+            ]
+        },
+        {
+            "group": "Digging Deeper",
+            "pages": [
+                "old/docs/authorization", 
+                "old/docs/cache", 
+                "old/docs/commands", 
+                "old/docs/storage", 
+                "old/docs/http-client", 
+                "old/docs/queues", 
+                "old/docs/scheduling"
+            ]
+        },
+        {
+            "group": "Database",
+            "pages": [
+                "old/docs/database",
+                "old/docs/query-builder",
+                "old/docs/migrations",
+                "old/docs/seeding",
+                "old/docs/redis"
+            ]
+        },
+        {
+            "group": "Rune ORM",
+            "pages": [
+                "old/docs/rune", 
+                "old/docs/relationships"
+            ]
+        },
+        {
+            "group": "Testing",
+            "pages": [
+                "old/docs/testing", 
+                "old/docs/http-tests", 
+                "old/docs/mocking"
+            ]
+        },
+        {
+            "group": "Mintlify Get Started",
+            "pages": [
+                "introduction", 
+                "quickstart", 
+                "development"
+            ]
+        },
+        {
+            "group": "Mintlify Essentials",
+            "pages": [
+                "essentials/markdown", 
+                "essentials/code", 
+                "essentials/images", 
+                "essentials/settings", 
+                "essentials/navigation"
+            ]
+        }
+    ],
+    "footerSocials": {
+        "twitter": "https://twitter.com/joshuawright11",
+        "github": "https://github.com/alchemy-swift/alchemy"
     }
-  },
-  "topbarLinks": [
-    {
-      "name": "Support",
-      "url": "mailto:hi@mintlify.com"
-    }
-  ],
-  "topbarCtaButton": {
-    "name": "Dashboard",
-    "url": "https://dashboard.mintlify.com"
-  },
-  "tabs": [
-    {
-      "name": "API Reference",
-      "url": "api-reference"
-    }
-  ],
-  "anchors": [
-    {
-      "name": "Documentation",
-      "icon": "book-open-cover",
-      "url": "https://mintlify.com/docs"
-    },
-    {
-      "name": "Community",
-      "icon": "slack",
-      "url": "https://mintlify.com/community"
-    },
-    {
-      "name": "Blog",
-      "icon": "newspaper",
-      "url": "https://mintlify.com/blog"
-    }
-  ],
-  "navigation": [
-    {
-      "group": "Get Started",
-      "pages": ["introduction", "quickstart", "development"]
-    },
-    {
-      "group": "Essentials",
-      "pages": ["essentials/markdown", "essentials/code", "essentials/images", "essentials/settings", "essentials/navigation"]
-    },
-    {
-      "group": "API Documentation",
-      "pages": ["api-reference/authentication"]
-    },
-    {
-      "group": "Endpoint Examples",
-      "pages": [
-        "api-reference/endpoint/get",
-        "api-reference/endpoint/create",
-        "api-reference/endpoint/update",
-        "api-reference/endpoint/delete"
-      ]
-    }
-  ],
-  "footerSocials": {
-    "twitter": "https://twitter.com/mintlify",
-    "github": "https://github.com/mintlify",
-    "linkedin": "https://www.linkedin.com/company/mintsearch"
-  }
 }

@@ -7,19 +7,19 @@ description: "This endpoint deletes an existing user."
 ### Body
 
 <ParamField body="data_source_provided_id" type="string">
-  The data source ID provided in the data tab may be used to identify the data
-  source for the user group
+    The data source ID provided in the data tab may be used to identify the data
+    source for the user group
 </ParamField>
 
 <ParamField body="current_token" type="string">
-  This is the current user group token you have for the user group you want to
-  delete
+    This is the current user group token you have for the user group you want to
+    delete
 </ParamField>
 
 ### Response
 
 <ResponseField name="success" type="number">
-  Indicates whether the call was successful. 1 if successful, 0 if not.
+    Indicates whether the call was successful. 1 if successful, 0 if not.
 </ResponseField>
 
 <RequestExample>
@@ -40,7 +40,7 @@ curl --location --request DELETE 'https://api.mintlify.com/api/user' \
 
 ```json Response
 {
-  "success": 1
+    "success": 1
 }
 ```
 
