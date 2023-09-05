@@ -18,16 +18,12 @@
             "to": "#9563FF"
         }
     },
-    "topbarLinks": [
-
-    ],
+    "topbarLinks": [],
     "topbarCtaButton": {
         "type": "github",
         "url": "https://github.com/alchemy-swift/alchemy"
     },
-    "tabs": [
-
-    ],
+    "tabs": [],
     "anchors": [
         {
             "name": "GitHub",
@@ -44,79 +40,61 @@
         {
             "group": "Get Started",
             "pages": [
-                "old/docs/introduction",
-                "old/docs/installation",
-                "old/docs/configuration",
-                "old/docs/services",
-                "old/docs/interoperability",
-                "old/docs/deploying"
+                "guides/introduction",
+                "guides/installation",
+                "guides/configuration",
+                "guides/services",
+                "guides/interoperability",
+                "guides/deploying"
             ]
         },
         {
             "group": "Essentials",
             "pages": [
-                "old/docs/routing",
-                "old/docs/middleware",
-                "old/docs/controllers",
-                "old/docs/requests",
-                "old/docs/responses",
-                "old/docs/views",
-                "old/docs/logging"
+                "guides/routing",
+                "guides/middleware",
+                "guides/controllers",
+                "guides/requests",
+                "guides/responses",
+                "guides/views",
+                "guides/logging"
             ]
         },
         {
             "group": "Digging Deeper",
             "pages": [
-                "old/docs/authorization",
-                "old/docs/cache",
-                "old/docs/commands",
-                "old/docs/storage",
-                "old/docs/http-client",
-                "old/docs/queues",
-                "old/docs/scheduling"
+                "guides/authorization",
+                "guides/cache",
+                "guides/commands",
+                "guides/storage",
+                "guides/http-client",
+                "guides/queues",
+                "guides/scheduling"
             ]
         },
         {
             "group": "Database",
             "pages": [
-                "old/docs/database",
-                "old/docs/query-builder",
-                "old/docs/migrations",
-                "old/docs/seeding",
-                "old/docs/redis"
+                "guides/database",
+                "guides/query-builder",
+                "guides/migrations",
+                "guides/seeding",
+                "guides/redis"
             ]
         },
         {
             "group": "Rune ORM",
             "pages": [
-                "old/docs/rune",
-                "old/docs/relationships"
+                "guides/rune",
+                "guides/relationships"
             ]
         },
         {
             "group": "Testing",
             "pages": [
-                "old/docs/testing",
-                "old/docs/http-tests",
-                "old/docs/mocking"
-            ]
-        },
-        {
-            "group": "Mintlify Get Started",
-            "pages": [
-                "introduction",
-                "quickstart",
-                "development"
-            ]
-        },
-        {
-            "group": "Mintlify Essentials",
-            "pages": [
-                "essentials/markdown",
-                "essentials/code",
-                "essentials/images",
-                "essentials/settings",
-                "essentials/navigation"
+                "guides/testing",
+                "guides/http-tests",
+                "guides/mocking"
             ]
         }
     ],
