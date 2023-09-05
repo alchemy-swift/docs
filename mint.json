@@ -2,14 +2,14 @@
     "$schema": "https://mintlify.com/schema.json",
     "name": "Alchemy",
     "logo": {
-        "dark": "/images/logo_header.png",
-        "light": "/images/logo_header.png"
+        "dark": "/images/hero_dark.png",
+        "light": "/images/hero.png"
     },
-    "favicon": "/favicon_2.png",
+    "favicon": "/favicon.png",
     "colors": {
-        "primary": "#9563FF",
-        "light": "#AE87FF",
-        "dark": "#0D001D",
+        "primary": "#F67B02",
+        "light": "#F67B02",
+        "dark": "#F67B02",
         "background": {
             "dark": "#090014"
         },
