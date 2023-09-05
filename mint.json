@@ -2,10 +2,10 @@
     "$schema": "https://mintlify.com/schema.json",
     "name": "Alchemy",
     "logo": {
-        "dark": "/logo/dark.svg",
-        "light": "/logo/light.svg"
+        "dark": "/images/logo_header.png",
+        "light": "/images/logo_header.png"
     },
-    "favicon": "/favicon.png",
+    "favicon": "/favicon_2.png",
     "colors": {
         "primary": "#9563FF",
         "light": "#AE87FF",
@@ -19,14 +19,14 @@
         }
     },
     "topbarLinks": [
-        
+
     ],
     "topbarCtaButton": {
         "type": "github",
         "url": "https://github.com/alchemy-swift/alchemy"
     },
     "tabs": [
-        
+
     ],
     "anchors": [
         {
@@ -45,34 +45,34 @@
             "group": "Get Started",
             "pages": [
                 "old/docs/introduction",
-                "old/docs/setup", 
-                "old/docs/configuration", 
-                "old/docs/services", 
-                "old/docs/deploying", 
-                "old/docs/interoperability"
+                "old/docs/installation",
+                "old/docs/configuration",
+                "old/docs/services",
+                "old/docs/interoperability",
+                "old/docs/deploying"
             ]
         },
         {
             "group": "Essentials",
             "pages": [
-                "old/docs/routing", 
-                "old/docs/middleware", 
-                "old/docs/controllers", 
-                "old/docs/requests", 
-                "old/docs/responses", 
-                "old/docs/views", 
+                "old/docs/routing",
+                "old/docs/middleware",
+                "old/docs/controllers",
+                "old/docs/requests",
+                "old/docs/responses",
+                "old/docs/views",
                 "old/docs/logging"
             ]
         },
         {
             "group": "Digging Deeper",
             "pages": [
-                "old/docs/authorization", 
-                "old/docs/cache", 
-                "old/docs/commands", 
-                "old/docs/storage", 
-                "old/docs/http-client", 
-                "old/docs/queues", 
+                "old/docs/authorization",
+                "old/docs/cache",
+                "old/docs/commands",
+                "old/docs/storage",
+                "old/docs/http-client",
+                "old/docs/queues",
                 "old/docs/scheduling"
             ]
         },
@@ -89,33 +89,33 @@
         {
             "group": "Rune ORM",
             "pages": [
-                "old/docs/rune", 
+                "old/docs/rune",
                 "old/docs/relationships"
             ]
         },
         {
             "group": "Testing",
             "pages": [
-                "old/docs/testing", 
-                "old/docs/http-tests", 
+                "old/docs/testing",
+                "old/docs/http-tests",
                 "old/docs/mocking"
             ]
         },
         {
             "group": "Mintlify Get Started",
             "pages": [
-                "introduction", 
-                "quickstart", 
+                "introduction",
+                "quickstart",
                 "development"
             ]
         },
         {
             "group": "Mintlify Essentials",
             "pages": [
-                "essentials/markdown", 
-                "essentials/code", 
-                "essentials/images", 
-                "essentials/settings", 
+                "essentials/markdown",
+                "essentials/code",
+                "essentials/images",
+                "essentials/settings",
                 "essentials/navigation"
             ]
         }
