@@ -38,7 +38,7 @@
     ],
     "navigation": [
         {
-            "group": "Get Started",
+            "group": "Getting Started",
             "pages": [
                 "guides/introduction",
                 "guides/quickstart",

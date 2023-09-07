@@ -7,6 +7,7 @@ To use Alchemy, you'll first need to make sure Swift is installed.
         Install and open the [latest Xcode](https://apps.apple.com/us/app/xcode/id497799835).
     </Tab>
     <Tab title="Linux">
+        Use the official [Linux Swift installer](https://github.com/swift-server/swiftly).
         ```bash
         curl -L https://swift-server.github.io/swiftly/swiftly-install.sh | bash
         ```
@@ -33,15 +34,19 @@ swift run
 
 ## Setup your Editor
 
-There's two main options for editors to write Swift on the Server - [Xcode](https://developer.apple.com/xcode/) and [Visual Studio Code](https://code.visualstudio.com). Here are some helpful tips to set up each.
+There are two main editor options for writing Swift - [Xcode](https://developer.apple.com/xcode/) and [Visual Studio Code](https://code.visualstudio.com). Here are some helpful tips for you to get set up with either.
 
 <AccordionGroup>
     <Accordion title="Xcode">
         **Set a custom working directory**
 
-By default, Xcode builds and runs all projects in a separate directory; `~/Library/Developer/Xcode/DerivedData/`. This isn't an issue for iOS apps, but it means that your Alchemy app won't be able to access important assets in your project such as an `.env` file or a `Public/` directory.
+    By default, Xcode builds and runs all projects in a separate directory; `~/Library/Developer/Xcode/DerivedData/`. This isn't an issue for iOS apps, but it means that your Alchemy app won't be able to access important assets in your project such as an `.env` file or a `Public/` directory.
 
-Fortunately this is simple to fix. You just need to tell Xcode to build and run your app in the root directory of your project: `Command + Shift + <` -> `Run` -> `Options` -> `select 'Use custom working directory:'` -> `enter the root directory of your project`.
+    Fortunately this is simple to fix. You just need to tell Xcode to build and run your app in the root directory of your project: `Command + Shift + <` -> `Run` -> `Options` -> `select 'Use custom working directory:'` -> `enter the root directory of your project`.
+
+    **Accessing hidden files**
+
+    You'll likely be configuring your Alchemy app with a `.env` file. Xcode is unable to edit or view hidden files (files prefaced with a `.`). When it comes time to work with these files, you'll need to use a text editor that can access them such as Visual Studio Code.
 
 </Accordion>
 <Accordion title="Visual Studio Code">
@@ -53,6 +58,6 @@ Swift ](https://github.com/swift-server/vscode-swift).
 
 ## Next Steps
 
-Congrats! You're app is up and running.
+Congrats! You're up and running with Alcehmy.
 
-Keep following the guides to see what you can build with Alchemy. If you get stuck at any point, drop in and ask questions in the [official Discord](https://discord.gg/cGDC6TK7f5).
+Keep following the guides to see what you can build. If you get stuck at any point, drop in and ask questions in the [official Discord](https://discord.gg/cGDC6TK7f5).
