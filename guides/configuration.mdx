@@ -157,7 +157,7 @@ let dbPort: Int? = Env.DB_PORT
 // Infer the type
 let dbHost: String? = Env.get("DB_HOST")
 
-// Infer the type, falling back to a default value
+// Infer the type and fall back to a default value if the variable isn't set
 let plaidBaseURL = Env.PLAID_BASE_URL ?? "https://sandbox.plaid.com"
 ```
 
