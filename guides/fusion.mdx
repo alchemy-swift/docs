@@ -1,3 +1,7 @@
+---
+title: 'Fusion'
+---
+
 <p align="center"><a href="https://github.com/alchemy-swift/fusion"><img src="https://user-images.githubusercontent.com/6025554/151728294-6185c3ed-ab54-4174-a376-4b2923b647d2.png" width="400"></a></p>
 
 <p align="center">
@@ -70,7 +74,7 @@ struct CreateAccountView: View {
 }
 ```
 
-Simple. Your logs will be properly sent to your remote logger. But let's say you want to run unit tests that test creating a user account. You probably don't want to spam up your remote logger with a bunch of dummy logs. Instead it would make more sense just to log everything to the console so you can debug if necessary. 
+Simple. Your logs will be properly sent to your remote logger. But let's say you want to run unit tests that test creating a user account. You probably don't want to spam up your remote logger with a bunch of dummy logs. Instead it would make more sense just to log everything to the console so you can debug if necessary.
 
 But this means that you'll need to provide a different instance of `Logger` everywhere you are using it, which could be hundreds of places. Fortunately, since you're using dependency injecion, this is a piece of cake.
 

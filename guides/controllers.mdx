@@ -1,3 +1,7 @@
+---
+title: 'Controllers'
+---
+
 Often, you'll end up with a lot of route handlers and want to logically isolate them from each other. For convenience, a `Controller` protocol is provided to help you do so. Implement the `route(_ app: Application)` method and register the controller in your `Application.boot`.
 
 Any middleware applied during a controller's `route()` will not be applied to handlers outside of this controller.

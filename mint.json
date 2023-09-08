@@ -5,7 +5,7 @@
         "dark": "/images/hero_dark.png",
         "light": "/images/hero.png"
     },
-    "favicon": "/favicon.png",
+    "favicon": "/images/favicon.png",
     "colors": {
         "primary": "#F67B02",
         "light": "#F67B02",
@@ -42,10 +42,9 @@
             "pages": [
                 "guides/introduction",
                 "guides/quickstart",
-                "guides/configuration",
                 "guides/services",
-                "guides/interoperability",
-                "guides/deploying"
+                "guides/configuration",
+                "guides/deployment"
             ]
         },
         {
@@ -63,13 +62,21 @@
         {
             "group": "Digging Deeper",
             "pages": [
-                "guides/authorization",
                 "guides/cache",
                 "guides/commands",
-                "guides/storage",
+                "guides/events",
                 "guides/http-client",
                 "guides/queues",
-                "guides/scheduling"
+                "guides/scheduling",
+                "guides/storage"
+            ]
+        },
+        {
+            "group": "Security",
+            "pages": [
+                "guides/authorization",
+                "guides/encryption",
+                "guides/hashing"
             ]
         },
         {
