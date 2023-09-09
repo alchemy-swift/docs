@@ -120,7 +120,7 @@
         "discord": "https://discord.gg/cGDC6TK7f5"
     },
     "feedback": {
-        "thumbsRating": true,
+        "thumbsRating": false,
         "suggestEdit": true,
         "raiseIssue": false
     }
