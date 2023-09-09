@@ -1,6 +1,8 @@
 # 🧪 Alchemy Docs
 
-The Alchemy docs are powered by [Mintlify](https://mintlify.com). Feel free to submit fixes or updates via PR.
+The Alchemy docs are hosted at [alchemyswift.com](https://www.alchemyswift.com/) and powered by [Mintlify](https://mintlify.com).
+
+You can submit fixes or updates via PR to this repo.
 
 ### 👩‍💻 Development
 
@@ -18,7 +20,7 @@ mintlify dev
 
 ### 😎 Publishing Changes
 
-Changes will be deployed to production automatically after pushing to the default branch.
+Changes will be deployed to production automatically after pushing to the main branch.
 
 You can also preview changes using PRs, which generates a preview link of the docs.
 
