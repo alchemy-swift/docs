@@ -5,6 +5,9 @@
         "dark": "/images/hero_dark.png",
         "light": "/images/hero.png"
     },
+    "modeToggle": {
+        "default": "light"
+    },
     "favicon": "/images/favicon.png",
     "colors": {
         "primary": "#F67B02",
