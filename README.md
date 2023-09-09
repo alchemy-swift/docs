@@ -1,6 +1,6 @@
 # 🧪 Alchemy Docs
 
-The Alchemy docs are hosted at [alchemyswift.com](https://www.alchemyswift.com/) and powered by [Mintlify](https://mintlify.com).
+The Alchemy docs are hosted at [alchemyswift.com](https://alchemyswift.com/) and powered by [Mintlify](https://mintlify.com).
 
 You can submit fixes or updates via PR to this repo.
 
