@@ -1,0 +1,124 @@
+{
+    "$schema": "https://mintlify.com/schema.json",
+    "name": "Alchemy",
+    "logo": {
+        "dark": "/images/hero_dark.png",
+        "light": "/images/hero.png"
+    },
+    "favicon": "/images/favicon.png",
+    "colors": {
+        "primary": "#F67B02",
+        "light": "#F67B02",
+        "dark": "#F67B02",
+        "background": {
+            "dark": "#090014"
+        },
+        "anchors": {
+            "from": "#FF7F57",
+            "to": "#9563FF"
+        }
+    },
+    "topbarLinks": [],
+    "topbarCtaButton": {
+        "type": "github",
+        "url": "https://github.com/alchemy-swift/alchemy"
+    },
+    "tabs": [],
+    "anchors": [
+        {
+            "name": "GitHub",
+            "icon": "github",
+            "url": "https://github.com/alchemy-swift/alchemy"
+        },
+        {
+            "name": "Discord",
+            "icon": "discord",
+            "url": "https://discord.gg/cGDC6TK7f5"
+        }
+    ],
+    "navigation": [
+        {
+            "group": "Getting Started",
+            "pages": [
+                "guides/introduction",
+                "guides/quickstart",
+                "guides/services",
+                "guides/configuration"
+            ]
+        },
+        {
+            "group": "Essentials",
+            "pages": [
+                "guides/routing",
+                "guides/middleware",
+                "guides/controllers",
+                "guides/requests",
+                "guides/responses",
+                "guides/views",
+                "guides/logging"
+            ]
+        },
+        {
+            "group": "Digging Deeper",
+            "pages": [
+                "guides/cache",
+                "guides/commands",
+                "guides/events",
+                "guides/http-client",
+                "guides/queues",
+                "guides/scheduling",
+                "guides/storage"
+            ]
+        },
+        {
+            "group": "Security",
+            "pages": [
+                "guides/authorization",
+                "guides/encryption",
+                "guides/hashing"
+            ]
+        },
+        {
+            "group": "Database",
+            "pages": [
+                "guides/database",
+                "guides/query-builder",
+                "guides/migrations",
+                "guides/seeding",
+                "guides/redis"
+            ]
+        },
+        {
+            "group": "Rune ORM",
+            "pages": [
+                "guides/rune",
+                "guides/relationships"
+            ]
+        },
+        {
+            "group": "Testing",
+            "pages": [
+                "guides/testing",
+                "guides/http-tests",
+                "guides/mocking"
+            ]
+        },
+        {
+            "group": "Deployment",
+            "pages": [
+                "guides/digitalocean",
+                "guides/docker"
+            ]
+        }
+    ],
+    "footerSocials": {
+        "twitter": "https://twitter.com/joshuawright11",
+        "github": "https://github.com/alchemy-swift/alchemy",
+        "discord": "https://discord.gg/cGDC6TK7f5"
+    },
+    "feedback": {
+        "thumbsRating": true,
+        "suggestEdit": true,
+        "raiseIssue": false
+    }
+}

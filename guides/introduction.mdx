@@ -1,0 +1,54 @@
+---
+title: "Introduction"
+---
+
+<img className="block dark:hidden" src="/images/hero.png" alt="Hero Light" />
+<img
+    className="hidden dark:block"
+    src="/images/hero_dark.png"
+    alt="Hero Dark"
+/>
+
+Welcome to Alchemy, an **elegant, batteries included backend framework for Swift**. You can use it to build a production ready backend for your next mobile app, cloud project or website.
+
+```swift App.swift
+@main
+struct App: Application {
+    func boot() {
+        get("/hello") { req in
+            "Hello, \(req["name"])!"
+        }
+    }
+}
+```
+
+## Why Alchemy?
+
+Swift on the Server is exciting but relatively nascant ecosystem. Building a backend with it can be daunting and the pains of building in a new ecosystem can get in the way. Alchemy gives you modern, robust, Swifty APIs for everything you need to build a production-ready backend such as...
+
+-   🚦 Simple, fast routing engine.
+-   📦 Powerful dependency injection container & plugins.
+-   🚀 Robust background job queues.
+-   🐘 Database agnostic ORM with migrations & extensible relationships.
+-   ⏱️ Cron-like task scheduler.
+-   📄 Clean, declarative service configurations.
+-   🧪 Expressive testing APIs.
+
+Alchemy is powered by [SwiftNIO](https://github.com/apple/swift-nio) and the [blazingly](https://web-frameworks-benchmark.netlify.app/result?l=swift) fast [Hummingbird](https://github.com/hummingbird-project/hummingbird-core) framework so that out of the box you can integrate existing Swift on the Server code. Stay focused on building your next amazing project in modern, Swifty style without sweating the details.
+
+## Start Building
+
+To get setup with Alchemy, check out the Quickstart. If you'd rather dive right into some code, take a look at the examples repo.
+
+<CardGroup cols={2}>
+    <Card title="Quickstart" icon="bolt-lightning" href="/guides/quickstart">
+        Get your first Alchemy app up and running.
+    </Card>
+    <Card
+        title="Examples"
+        icon="stars"
+        href="https://github.com/alchemy-swift/examples"
+    >
+        Example Alchemy apps showing all the basics.
+    </Card>
+</CardGroup>

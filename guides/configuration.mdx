@@ -1,0 +1,195 @@
+---
+title: 'Configuration'
+---
+
+## Introduction
+
+When setting up your Alchemy app, you'll want to configure important services such as databases, job queues, or filesystems. Typically, these will have configuration types that let you isolate your configuration logic. If you got started with the template project, you'll see these in the `Configs/` directory of your app.
+
+```
+Configs
+├── App+Caches.swift
+├── App+Config.swift
+├── App+Database.swift
+├── App+Filesystems.swift
+├── App+Loggers.swift
+└── App+Queues.swift
+```
+
+All other setup logic, including routing, can go in the `Application.boot()` function which runs after all [Services & Plugins](/guides/services) have loaded.
+
+```swift App.swift
+struct App: Application {
+    func boot() {
+        Log.info("Application is booting.")
+        get("/hello") {
+            "Hello, \($0["name"])!"
+        }
+    }
+}
+```
+
+## General Application Configuration
+
+Out of the box, your application is configured with sensible default settings. You can customize general application settings by overriding your appliation's `var configuration: Configuration`.
+
+```swift Configs/App+Config.swift
+extension App {
+    var configuration: Configuration {
+        Configuration(
+            plugins: [
+                // Install any custom plugins here.
+            ],
+            commands: [
+                // Define any custom commands here.
+            ],
+            maxUploadSize: 2 * 1024 * 1024 * 1024 // allow uploads up to 2GB
+        )
+    }
+}
+```
+
+### Enable TLS
+
+By default, the server runs over `HTTP/1.1`. You can enable running over TLS with `useHTTPS(...)`.
+
+```swift
+func boot() throws {
+    try useHTTPS(key: "/path/to/private-key.pem", cert: "/path/to/cert.pem")
+}
+```
+
+### Enable HTTP/2
+
+You may also configure your server to use `HTTP/2` with `useHTTP2(...)`.
+
+<Tip>`HTTP/2` is only supported over TLS and so automatically uses it. You don't need to call both `useHTTPS` and `useHTTP2`.</Tip>
+
+```swift
+func boot() throws {
+    try useHTTP2(key: "/path/to/private-key.pem", cert: "/path/to/cert.pem")
+}
+```
+
+## Environment
+
+You'll often want to change configurations depending on the environment your app is running in. For example, using a different database during local development than in production.
+
+Alchemy makes this easy with the `Environment` type, easily accessed through the `Env` alias. By default when your app boots it will load all process environment variables as well as an optional dotenv file.
+
+### Dotenv Files
+
+A dotenv file is a list of keys & values you'll use to configure your project. You'll typically have one for each environment you want to run your app in such as `local`, `stage`, and `prod`.
+
+The default dotenv file at `.env` includes some common environment variables. Inside your `.env` file, keys & values are separated with an `=`.
+
+<Warning>
+    If a variable with the same name exists in both the process environment
+    _and_ a loaded dotenv file, the value from the process environment will be
+    returned when accessing the Environment.
+</Warning>
+
+```ini .env
+APP_NAME=Alchemy
+APP_KEY=
+APP_DEBUG=true
+APP_URL=http://localhost
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=5432
+DB_DATABASE=alchemy
+DB_USER=josh
+DB_PASS=password
+
+REDIS_HOST=127.0.0.1
+REDIS_PASSWORD=null
+REDIS_PORT=6379
+
+AWS_ACCESS_KEY_ID=
+AWS_SECRET_ACCESS_KEY=
+AWS_DEFAULT_REGION=us-east-1
+AWS_BUCKET=
+```
+
+### Setting the Environment
+
+The default environment is `local` and loads variables from any file at `.env`. To change this, run your app with the -e {env_name} flag or set `APP_ENV={env_name}` in the process environment. This will set the environment name to `{env_name}` and load variables from a dotenv file at `.env.{env_name}`.
+
+You'll typically have a separate dotenv file for each of your app environments (i.e. local, staging, production).
+
+<CodeGroup>
+```bash run.sh
+# Run for Local Dev
+swift run app
+# Start the Stage app
+swift run app -e stage
+# Start the Prod app
+swift run app -e prod
+````
+```ini .env
+APP_DEBUG=true
+DB_HOST=localhost
+````
+
+```ini .env.stage
+APP_DEBUG=true
+DB_HOST=stage.database.com
+```
+
+```ini .env.prod
+APP_DEBUG=false
+DB_HOST=prod.database.com
+```
+
+</CodeGroup>
+
+### Accessing Environment Variables
+
+To access environment variables, use the `Env` alias to access the current `Environment`. You can use `.get(...)`, subscripts, or @dynamicMemberLookup. You'll have to specify the type that you'd like to convert the result to and the result is always optional.
+
+```swift
+// Explicitly specify the type
+let isDebug = Env.get("APP_DEBUG", as: Bool.self)
+
+// Access via subscript
+let featureEnabled: Int? = Env["FEATURE_ENABLED"]
+
+// Access via @dynamicMemberLookup
+let dbPort: Int? = Env.DB_PORT
+
+// Infer the type
+let dbHost: String? = Env.get("DB_HOST")
+
+// Infer the type and fall back to a default value if the variable isn't set
+let plaidBaseURL = Env.PLAID_BASE_URL ?? "https://sandbox.plaid.com"
+```
+
+## Testing
+
+When your app is run in the context of a test, the default env changes from `local` to `test` and dotenv variables are loaded from `.env.test` if it exists. You should set environment variables appropriate for testing there.
+
+### Detecting if the app is in a test
+
+You can quickly access if your app is running in a test via `Env.isTesting`.
+
+```swift App+Databases.swift
+extension App {
+    var databases: Databases {
+        Databases(
+            default: Env.isTesting ? "sqlite" : "postgres",
+        )
+    }
+}
+```
+
+### Manually mocking the environment
+
+If you'd like to further customize or mock the Environment during a test, you can mock it in the [application Container](/guides/services).
+
+```swift
+func testDatabaseOverride() {
+    Container.register(Environment(name: "foo", dotenvVariables: ["DB_DEFAULT": "sqlite"])).singleton()
+    XCTAssertEqual(Env.DB_DEFAULT, "sqlite")
+}
+```

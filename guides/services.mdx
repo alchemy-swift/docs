@@ -1,0 +1,292 @@
+---
+title: 'Services'
+---
+
+## Introduction
+
+The Alchemy service `Container` manages dependencies and performs dependency injection. Dependency injection is a fancy phrase for "registering" and "resolving" services with a certain interface. Doing so makes your services easier to mock in tests or swap out for various implementations.
+
+Out of the box, your Alchemy app is configured with a variety of essential services. If you need to add more, you can do so directly through your application's `var container: Container`. For larger groups of services and associated logic, you can write a custom [Plugin](#plugins).
+
+## Registering
+
+Registering a service is simple. Just call the `register` function of a container which takes a factory closure that will be used to create a service of that type when it's resolved. The closure has a single `Container` to resolve other services that may be dependencies.
+
+```swift
+container.register { container in
+    let users = container.require(UsersService.self)
+    return AccountsService(users: users)
+}
+```
+
+For services that don't have any dependencies, you can just pass a value of the service.
+
+<Note>This API uses @autoclosure. The value you pass won't actually be called until the service is resolved.</Note>
+
+```swift
+container.register(UsersService())
+```
+
+By default, a value is registered to the container as its type. If you'd like to register the value as a type it inherits, such as a protocol, just use `as`.
+
+```swift
+container.register(SQLiteDatabase() as Database)
+```
+
+Lastly, if you'd just like to register to the main application container (`Container.main`) you can call all of these functions statically.
+
+```swift
+container.register(WebhookService())
+```
+
+### Identified Services
+
+If you'd like to register multiple instances of a type to the container, you can associate each of them with an identifier. The identifier should be something `Hashable`, like a `String` or `Int`.
+
+```swift
+container.regiser(SQLiteDatabase() as Database, id: "sqlite")
+```
+
+### Singleton Services
+
+Each time a service is resolved, the factory closure will be called. This will create a new instance of the service for each resolution. If you'd like for to only create a single instance of the type and return that on all subsequent resolutions, add `.singleton()` after registering.
+
+```swift
+container.regiser(MailService()).singleton()
+```
+
+## Resolving
+
+You can resolve a service using the `resolve()` function. This will return an optional instance of the service, returning `nil` if the service isn't registered.
+
+```swift
+let users: UsersService? = container.resolve(UsersService.self)
+
+// The type can be inferred.
+let users: UsersService? = container.resolve()
+```
+
+If you'd like to enforce that a service has been registered, you can use `resolveOrThrow` which throws an error if the service hasn't been registered.
+
+```swift
+do {
+    let txs: TransactionsService = try container.resolveOrThrow()
+} catch {
+    Log.error("TransactionsService not registered!")
+}
+```
+
+You may also use `require` which will just stop program execution if the service isn't registered.
+
+```swift
+let txs: TransactionsService = container.require()
+```
+
+### Resolving Identified Services
+
+If you registered your service with an identifier, you'll need to resolve it passing an `id:` parameter to any of the above functions.
+
+```swift
+let postgres: Database = Container.require(id: "postgres")
+```
+
+### @Inject
+
+For convenience, you can also resolve services with the @Inject property wrapper. When accessed, this resolves a service from the main container.
+
+```swift
+struct UsersService {
+    @Inject var auth: AuthService
+}
+```
+
+If your service was registered with an identifier, you'll need to pass that as an argument.
+
+```swift
+@Inject("postgres") var db: Database
+```
+
+#### @Injecting from a custom container
+
+Sometimes you might not want to inject from the main application container. To do so with `@Inject` you can conform the enclosing type to `Containerized`. This will cause `@Inject` to resolve from the container on the enclosing type.
+
+<Note>`Containerized` requires that the enclosing type is a class.</Note>
+
+```swift
+final class AuthService: Containerized {
+    // Will be resolved from the `container` property below.
+    @Injet var db: Database
+
+    let container: container
+
+    init(container: Container) {
+        self.container = container
+    }
+}
+```
+
+### Aliases
+
+For convenience, many of the services that you'll regularly use in Alchemy have a global accessor variable that you can use to quickly inject the default instance. For example, `DB` resolves your app's default `Database`.
+
+```swift
+let rows = try await DB.table("users").get()
+```
+
+While this may look like a static call, it's actually equivalent to calling `Container.resolve(Database.self)`. Using aliases you can easily use dependency injection without cluttering up your code with a bunch of `Container.resolve(...)` calls.
+
+You can access an identified service this way as well.
+
+```swift
+let rows = try await DB("sqlite").table("users").get()
+```
+
+#### The `Service` protocol
+
+Many core Alchemy services conform to the `Service` protocol. This gives them an associated identifier type, `Service.Identifier`. You can use this type to create typesafe identifiers for accessing various service instances through aliases.
+
+```swift
+extension Database.Identifier {
+    static let sqlite: Database.Identifier = "sqlite"
+}
+
+let rows = try await DB(.sqlite).table("users").get()
+```
+
+#### All Available Aliases
+
+You can see a list of all available aliases below.
+
+| Alias       | Service Type       | Description                                                                          |
+| ----------- | ------------------ | ------------------------------------------------------------------------------------ |
+| `DB`        | `Database`         | Your app's default database.                                                         |
+| `Http`      | `Client`           | A client for making HTTP requests. See [HTTP Client](/guides/http-client).           |
+| `Lifecycle` | `ServiceLifecycle` | The app's lifecycle. See [App Lifecycle](#app-lifecycle).                            |
+| `Env`       | `Environment`      | The app environment. See [Environment](/guides/configuration#environment)            |
+| `Log`       | `Logger`           | The default app logger. See [Logging](/guides/logging).                              |
+| `Schedule`  | `Scheduler`        | Cron like scheduler for recurring tasks. See [Task Scheduling](/guides/scheduling).  |
+| `Storage`   | `Filesystem`       | Filesystem for storing and loading files. See [File Storage](/guides/storage).       |
+| `Stash`     | `Cache`            | Key value cache. See [Cache](/guides/cache).                                         |
+| `Q`         | `Queue`            | Queue for running background jobs. See [Queues](/guides/queues).                     |
+| `Redis`     | `RedisClient`      | A Redis client. See [Redis](/guides/redis).                                          |
+| `Events`    | `EventBus`         | A pub/sub system of events throughout the application. See [Events](/guides/events). |
+| `Hash`      | `Hasher`           | Hashes and verifies passwords. See [Hashing](/guides/hashing).                       |
+| `Crypt`     | `Encrypter`        | Encrypts and decrypts arbitrary data. See [Encryption](/guides/encryption).          |
+| `Loop`      | `EventLoop`        | The current event loop. See [SwiftNIO services](#swiftnio-services).                 |
+| `LoopGroup` | `EventLoopGroup`   | The app's event loop group. See [SwiftNIO services](#swiftnio-services).             |
+| `Thread`    | `NIOThreadPool`    | The app's main thread pool. See [SwiftNIO services](#swiftnio-services).             |
+
+## Plugins
+
+Sometimes, you may want to extend Alchemy with significant functionality. You might be creating a third party library or just building a complex app. You can use plugins to help manage this process.
+
+A Plugin is essentially a type that wraps the registration and lifecycle of a group of services. Under the hood, Alchemy is built almost entirely with plugins - the `Application` type essentially just loads and boots a variety of plugins. You can register additional plugins in your application's configuration.
+
+A plugin has three optional functions - `registerServices(...)`, `boot(...)`, and `shutdownServices(...)`.
+
+### `registerServices`
+
+A plugin should register all services to the application container in this function.
+
+<Warning>Other services from other plugins might not be registered to the container yet, so don't try to access any in this function.</Warning>
+
+### `boot`
+
+The boot function is called after ALL `registerServices` has been called on all plugins. Therefore it is safe to access all services. Here a plugin should perform any startup logic for its registered services. It can also interact with any services from other plugins it might depend on to do things like add routes to the application or add migrations to the default database.
+
+### `shutdownServices`
+
+This is just a hook for a plugin to perform any shutdown logic related to it's services.
+
+## App Lifecycle
+
+Alchemy uses [swift-service-lifecycle](https://github.com/swift-server/swift-service-lifecycle) under the hood to power starting up and shutting down various services. If you need to hook into this, you can do so by resolving `ServiceLifecycle` from the application container or with the `Lifecycle` [alias](#alias).
+
+<Warning>The lifecycle is started immediately after your application's `boot()` function is called. If you need to register a service to the lifecycle's startup, you'll need to do so in that function.</Warning>
+
+```swift App.swift
+func boot() {
+
+    // 0. Create the service
+    let service = CustomService()
+
+    // 1. Add it to the container.
+    Container.register(service).singleton()
+
+    // 2. Hook it up to the app lifecycle.
+    Lifecycle.register(
+        label: "CustomService",
+        start: .async {
+            try await service.start()
+        },
+        shutdown: .async {
+            try await service.shutdown()
+        }
+    )
+}
+```
+
+## SwiftNIO services
+
+Alchemy is built on top of [Swift NIO](https://github.com/apple/swift-nio) and seamlessly integrates with other NIO based projects from the Swift on the Server ecosystem. Should you need to access these underlying NIO type you can do so through the main application container.
+
+### EventLoopGroup
+
+The main `EventLoopGroup` is accessible via the container or the `LoopGroup` [alias](#aliases).
+
+```swift
+// via container
+let eventLoopGroup = Container.require(EventLoopGroup.self)
+
+// more simply via alias
+let eventLoopGroup = LoopGroup
+```
+
+### EventLoop
+
+The current `EventLoop` is accessible via the container or the `Loop` [alias](#aliases).
+
+<Note>
+If the code you call this on isn't running on an `EventLoop` the next available `EventLoop` from the main `EventLoopGroup` will be return.
+</Note>
+
+```swift
+// via container
+let eventLoop = Container.require(EventLoop.self)
+
+// via alias
+let eventLoop = Loop
+```
+
+### NIOThreadPool
+
+Your application's `NIOThreadPool` is accessible via the container or the `Thread` [alias](#aliases).
+
+```swift
+// via container
+let threadPool = Container.require(NIOThreadPool.self)
+
+// more simply via alias
+let threadPool = Thread
+```
+
+Alchemy also adds a utility function, `run(...)` to `NIOThreadPool` that provides an async interface for running expensive work on a background thread and then returning the result of the work to the current `EventLoop`.
+
+```swift
+let value: LocationSchema = try await Thread.run {
+    try JSONDecoder().decode(LocationSchema.self, from: jsonData)
+}
+```
+
+## Testing
+
+When it comes time to write tests for your app, you can easily mock services by registering an instance appropriate for testing to the `Container`.
+
+```swift
+final class UsersServiceTests: XCTestCase {
+    func testCreateUser() {
+        Container.register(UsersServiceMock() as UsersService)
+        ...
+    }
+}
+```
