@@ -1,5 +1,5 @@
 ---
-title: 'Deployment'
+title: 'DigitalOcean'
 ---
 
 While there are many ways to deploy your Alchemy app, this guide focuses on deploying to a Linux machine with DigitalOcean and deploying with Docker.
@@ -91,50 +91,3 @@ Congrats, your project is live!
 ```shell
 swift run -c release -Xswiftc -g
 ```
-
-## Docker
-
-You can use Docker to create an image that will be deployable anywhere Docker is usable.
-
-### Create a Dockerfile
-
-Start off by creating a `Dockerfile`. This is a file that tells Docker how to build & run an image with your server.
-
-Here's a sample one to copy and paste. Note that you may have to change `Backend` to the name of your executable product.
-
-This file tells docker to use a base image of `swift:latest`, build your project, and, when the image is run, run your executable on host 0.0.0.0 at port 3000
-
-```dockerfile
-FROM swift:latest
-WORKDIR /app
-COPY . .
-RUN swift build -c release -Xswiftc -g
-RUN mkdir /app/bin
-RUN mv `swift build -c release --show-bin-path` /app/bin
-EXPOSE 3000
-ENTRYPOINT ./bin/release/Backend --host 0.0.0.0 --port 3000
-```
-
-### Build and deploy the image
-
-Now build your image. If you've been running your project from the CLI, there may be a hefty `.build` folder. You might want to nuke that before running `docker build` so that you don't need to wait to pass that unneeded directory to Docker.
-
-```shell
-$ docker build .
-...
-Successfully built ab21d0f26ecd
-```
-
-Finally, run the built image. Pass in `-d` to tell Docker to run your image in the background and `-p 3000:3000` to tell it that your container's 3000 port should be exposed to your machine.
-
-```shell
-docker run -d -p 3000:3000 ab21d0f26ecd
-```
-
-Visit `http://0.0.0.0:3000/hello` in the browser and you should see
-
-```
-Hello, World!
-```
-
-Awesome! You're ready to deploy with Docker.

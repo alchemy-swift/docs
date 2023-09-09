@@ -43,8 +43,7 @@
                 "guides/introduction",
                 "guides/quickstart",
                 "guides/services",
-                "guides/configuration",
-                "guides/deployment"
+                "guides/configuration"
             ]
         },
         {
@@ -102,6 +101,13 @@
                 "guides/testing",
                 "guides/http-tests",
                 "guides/mocking"
+            ]
+        },
+        {
+            "group": "Deployment",
+            "pages": [
+                "guides/digitalocean",
+                "guides/docker"
             ]
         }
     ],
