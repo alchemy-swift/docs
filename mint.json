@@ -64,7 +64,6 @@
                 "guides/controllers",
                 "guides/requests",
                 "guides/responses",
-                "guides/views",
                 "guides/logging"
             ]
         },
