@@ -1,12 +1,6 @@
-# Mintlify Starter Kit
+# 🧪 Alchemy Docs
 
-Click on `Use this template` to copy the Mintlify starter kit. The starter kit contains examples including
-
--   Guide pages
--   Navigation
--   Customizations
--   API Reference pages
--   Use of popular components
+The Alchemy docs are powered by [Mintlify](https://mintlify.com). Feel free to submit fixes or updates via PR.
 
 ### 👩‍💻 Development
 
