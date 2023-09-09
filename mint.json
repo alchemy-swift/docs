@@ -46,7 +46,14 @@
                 "guides/introduction",
                 "guides/quickstart",
                 "guides/services",
-                "guides/configuration"
+                "guides/configuration",
+                {
+                    "group": "Deployment",
+                    "pages": [
+                        "guides/docker",
+                        "guides/digitalocean"
+                    ]
+                }
             ]
         },
         {

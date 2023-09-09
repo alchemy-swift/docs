@@ -2,49 +2,132 @@
 title: 'Docker'
 ---
 
-## Docker
-
-You can use Docker to create an image that will be deployable anywhere Docker is usable.
+You can use [Docker](https://www.docker.com/) to create an image of your Alchemy app that will be deployable anywhere Docker is installed.
 
 ### Create a Dockerfile
 
-Start off by creating a `Dockerfile`. This is a file that tells Docker how to build & run an image with your server.
+You'll need a `Dockerfile` to deploy with Docker. This is a file that tells Docker how to build & run an image with your server.
 
-Here's a sample one to copy and paste. Note that you may have to change `Backend` to the name of your executable product.
+If you created an Alchemy app with the installer script, a `Dockerfile` is already included in your project.
 
-This file tells docker to use a base image of `swift:latest`, build your project, and, when the image is run, run your executable on host 0.0.0.0 at port 3000
+If you didn't, here's one that you can use.
 
+<Accordion title="Dockerfile" icon="docker">
 ```dockerfile
-FROM swift:latest
-WORKDIR /app
+# ================================
+# Build image (Ubuntu 22.04)
+# ================================
+FROM swift:5.8-jammy as build
+
+# Update system packages
+RUN export DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true \
+    && apt-get -q update \
+    && apt-get -q dist-upgrade -y \
+    && rm -rf /var/lib/apt/lists/*
+
+# Set up a build area
+WORKDIR /build
+
+# Resolve dependencies, creating a cached layer
+COPY ./Package.* ./
+RUN swift package resolve
+
+# Copy entire project into container
 COPY . .
-RUN swift build -c release -Xswiftc -g
-RUN mkdir /app/bin
-RUN mv `swift build -c release --show-bin-path` /app/bin
+
+# Build everything, with optimizations
+RUN swift build -c release --static-swift-stdlib
+
+# Set up a staging area
+WORKDIR /staging
+
+# Copy the executable
+RUN mv `swift build --package-path /build -c release --show-bin-path`/app ./
+
+# Copy Public directory, if it exists. Ensure it's contents aren't writable.
+RUN [ -d /build/Public ] && { mv /build/Public /staging/Public && chmod -R a-w /staging/Public; } || true
+
+# ================================
+# Run image
+# ================================
+FROM ubuntu:jammy
+
+# Update system packages and install necessary packages
+RUN export DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true \
+    && apt-get -q update \
+    && apt-get -q dist-upgrade -y \
+    && apt-get -q install -y ca-certificates tzdata libsqlite3-dev \
+    && rm -r /var/lib/apt/lists/*
+
+# Switch to a new home directory
+WORKDIR /app
+
+# Copy over needed files
+COPY --from=build /staging /app
+
+# Start the Alchemy app on port 3000
 EXPOSE 3000
-ENTRYPOINT ./bin/release/Backend --host 0.0.0.0 --port 3000
+ENTRYPOINT [ "./app" ]
+CMD ["serve", "--host", "0.0.0.0", "--port", "3000"]
 ```
+</Accordion>
 
-### Build and deploy the image
+### Build an Image
 
-Now build your image. If you've been running your project from the CLI, there may be a hefty `.build` folder. You might want to nuke that before running `docker build` so that you don't need to wait to pass that unneeded directory to Docker.
+Once that's done, build an image of your app. This may take a moment.
 
 ```shell
-$ docker build .
-...
-Successfully built ab21d0f26ecd
+docker build -t my-app:latest .
 ```
 
-Finally, run the built image. Pass in `-d` to tell Docker to run your image in the background and `-p 3000:3000` to tell it that your container's 3000 port should be exposed to your machine.
+### Run a Container
+
+Finally, run the built image in a container. The `-d` flag tells Docker to run your container in the background and `-p 3000:3000` tells it to bind it to `localhost:3000`.
 
 ```shell
-docker run -d -p 3000:3000 ab21d0f26ecd
+docker run -d -p 3000:3000 my-app:latest
 ```
 
-Visit `http://0.0.0.0:3000/hello` in the browser and you should see
+Visit `http://localhost:3000` in the browser and you'll see your app running. Nicely done!
 
+### Docker Compose
+
+[Docker Compose](https://docs.docker.com/compose/) helps you start multiple containers at once defined in a `docker-compose.yml` file.
+
+Again, if you created an Alchemy app with the installer script a `docker-compose.yml` are already included in your project.
+
+If you didn't, here's a simple one that you can use. It runs three services based on your project - an app that serves to `localhost:3000`, a [scheduler](/guides/scheduling), and a [queue worker](/guides/queues).
+
+<Accordion title="docker-compose.yml" icon="docker">
+```yml
+services:
+  app:
+    container_name: app
+    image: alchemy-app:latest
+    build:
+      context: .
+    ports:
+      - '3000:3000'
+    command: [ "serve", "--host", "0.0.0.0", "--port", "3000" ]
+  worker:
+    container_name: worker
+    image: alchemy-app:latest
+    command: [ "queue:work", "--workers", "1" ]
+  scheduler:
+    container_name: scheduler
+    image: alchemy-app:latest
+    command: [ "schedule" ]
 ```
-Hello, World!
+</Accordion>
+
+Once you've created a `docker-compose.yml` file, you can easily start all three of these services in separate docker containers. Like before, the -d flag runs it in the background.
+
+```shell
+docker compose up -d
 ```
 
-Awesome! You're ready to deploy with Docker.
+Shutting all three of them down is just as simple.
+
+```shell
+docker compose down
+```
