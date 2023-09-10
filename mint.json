@@ -111,13 +111,6 @@
                 "guides/http-tests",
                 "guides/mocking"
             ]
-        },
-        {
-            "group": "Deployment",
-            "pages": [
-                "guides/digitalocean",
-                "guides/docker"
-            ]
         }
     ],
     "footerSocials": {
