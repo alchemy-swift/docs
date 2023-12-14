@@ -4,53 +4,75 @@ title: 'Routing'
 
 ## Handling Requests
 
-When a request comes through the host & port on which your server is listening, it immediately gets routed to your application.
+When a request comes through the host & port on which your server is listening, it immediately gets routed to your application You can set up handlers in your application's `boot()` function.
 
-You can set up handlers in the `boot()` function of your app.
+Handlers are defined with the `.on(method:at:handler:)` function, which takes an `HTTPMethod`, a path, and a handler. The handler is a closure that accepts a `Request` and returns a type that conforms to `ResponseConvertable`.
 
-Handlers are defined with the `.on(method:at:handler:)` function, which takes an `HTTPMethod`, a path, and a handler. The handler is a closure that accepts a `Request` and returns a type that conforms to `ResponseConvertable`. There's sugar for registering handlers for specific methods via `get()`, `post()`, `put()`, `patch()`, etc.
+There's sugar for registering handlers for specific methods via `get()`, `post()`, `put()`, `patch()`, etc.
 
 ```swift
 struct ExampleApp: Application {
     func boot() {
         // GET {host}:{port}/hello
-        get("/hello") { request in
+        get("/hello") { req in
             "Hello, World!"
+        }
+
+        // Handlers can be async and throw errors.
+        get("/users") { req in
+            try await DB.table("users").get()
         }
     }
 }
 ```
 
-## ResponseEncodable
+## Returning a Value
 
-Out of the box, Alchemy conforms most types you'd need to return from a handler to `ResponseConvertible`.
+Handlers can be asynchronous and throw errors. They should return either a `Response`, something conforming to `ResponseConvertible`, something conforming to `Encodable`, or `Void`.
 
-### Anything `Codable`
+### `Response`
+
+```swift
+app.get("/response") { req in
+    Response(status: .ok, body: "Hello from /response")
+}
+```
+
+### `ResponseConvertible`
+
+
+```swift
+struct User: ResponseConvertible {
+    let name: String
+
+    public func response() -> Response {
+        Response(status: .ok, body: "Hello, \(name)!")
+    }
+}
+```
+
+```swift
+app.get("/response") { req in
+    User(name: req["name"])
+}
+```
+
+### `Encodable`
 
 ```swift
 /// String
-app.get("/string", handler: { _ in "Howdy!" })
-
-/// Int
-app.on(.GET, at: "/int", handler: { _ in 42 })
-
-/// Custom type
-
-struct Todo: Codable {
-    var name: String
-    var isDone: Bool
+app.get("/string") { req in
+    "Howdy!"
 }
 
-app.get("/todo", handler: { _ in
-    Todo(name: "Write backend in Swift", isDone: true)
-})
-```
+/// Custom Encodable type
+app.get("/todo") { req in
+    Todo(name: "Write backend Swift", isDone: true)
+}
 
-### a `Response`
-
-```swift
-app.get("/response") { _ in
-    Response(status: .ok, body: HTTPBody(text: "Hello from /response"))
+struct Todo: Encodable {
+    let name: String
+    let isDone: Bool
 }
 ```
 
@@ -61,20 +83,6 @@ app.get("/testing_query") { request in
     print("Got params \(request.queryItems)")
 }
 ```
-
-### Futures that result in a `ResponseConvertible` value
-
-```swift
-app.get("/todos") { _ in
-    loadTodosFromDatabase()
-}
-
-func loadTodosFromDatabase() -> EventLoopFuture<[Todo]> {
-    ...
-}
-```
-
-_Note_ an `EventLoopFuture<T>` is the Swift server world's version of a future. See [Under the Hood](../getting-started/12_underthehood.md).
 
 ### Chaining Requests
 
@@ -89,71 +97,89 @@ app
     .delete("/user", handler: controller.delete)
 ```
 
-## Errors
+## Error Handling
 
-Routing in Alchemy is heavily integrated with Swift's built in error handling. [Middleware](3b_routingmiddleware.md) & handlers allow for synchronous or asynchronous code to `throw`.
-
-If an error is thrown or an `EventLoopFuture` results in an error, it will be caught & mapped to a `Response`.
+If a handler throws an error, it will be caught & automatically mapped to a `Response`.
 
 Generic errors will result in an `Response` with a status code of 500, but if any error that conforms to `ResponseConvertible` is thrown, it will be converted as such.
 
-Out of the box `HTTPError` conforms to `ResponseConvertible`. If it is thrown, the response will contain the status code & message of the `HTTPError`.
+Out of the box, Alchemy provides `HTTPError` which conforms to `ResponseConvertible`. If it is thrown, the response will contain the status code & message of the error.
 
 ```swift
-struct SomeError: Error {}
+struct MyError: Error { ... }
 
 app
-    .get("/foo") { _ in
+    .get("/500") { req in
         // Will result in a 500 response with a generic error message.
-        throw SomeError()
+        throw MyError()
     }
-    .get("/bar") { _ in
+    .get("/404") { req in
         // Will result in a 404 response with the custom message.
         throw HTTPError(status: .notFound, message: "This endpoint doesn't exist!")
     }
 ```
 
-## Path parameters
+### Custom Default Error Handler
 
-Dynamic path parameters can be added with a variable name prefaced by a colon (`:`). The value will be parsed and accessible in the handler.
+By default, unhandled errors will result in a 500 response. If you'd prefer, you can use `setErrorHandler` to return a custom `Response` whenever your app encounters an unhandled error.
 
 ```swift
-app.on(.GET, at: "/users/:userID") { req in
-    let userID: String? = req.pathParameter(named: "userID")
+app.setErrorHandler { req, err in
+    Response(status: .internalServerError, message: "Uh oh. We've hit a snag.")
+}
+```
+
+### Custom Not Found Handler
+
+Likewise, use `notFoundHandler` to return a custom `Response` when a request is made that doesn't match any of your app's routes.
+
+```swift
+app.notFoundHandler { req in
+    Response(status: .notFound, message: "These aren't the bytes you're looking for.")
+}
+```
+
+## Route Parameters
+
+Dynamic route parameters can be added with a variable name prefaced by a colon (`:`). The value of the parameter can be accessed on the `Request` object.
+
+```swift
+app.get("/users/:userId") { req in
+    let id = req.parameter("userId", as: Int.self)
 }
 ```
 
 As long as they have different names, a route can have as many path parameters as you'd like.
 
-## Accessing request data
+## Route Groups
 
-Data you might need to get off of an incoming request are in the `Request` type.
+You can use `.group()` to add middleware or path prefixes to a specific group of routes.
 
 ```swift
-app.post("/users/:userID") { req in
-    // Headers
-    let authHeader: String? = req.headers.first(name: "Authorization")
+app.group(AuthMiddleware())
+    .get("/user") { /* will run AuthMiddleware beforehand */ }
 
-    // Query (URL) parameters
-    let countParameter: QueryParameter? = req.queryItems
-        .filter ({ $0.name == "count" }).first
+app.post("/login") { /* will not run AuthMiddleware */ }
+```
 
-    // Path
-    let thePath: String? = req.path
+There is also a closure based `.group()` that will isolate the prefix or middleware to any handlers defined in the closure. Using the closure based version, the example above would look like so:
 
-    // Path parameters
-    let userID: String? = req.pathParameter(named: "userID")
+```swift
+app
+    .group(AuthMiddleware()) {
+        $0.get("/user") { ... }
+    }
+    .post("/login")
+```
 
-    // Method
-    let theMethod: HTTPMethod = req.method
+## Route Streaming
 
-    // Body
-    let body: SomeCodable = try req.body.decodeJSON()
+By default, Alchemy collects the entire body of a `Request` before a route handler is called. If the request is uploading a large file, this could balloon memory. If you'd like to enable request streaming, pass the `.stream` to a handler's `options` parameter. This will call the handler as soon as the request's body begins streaming so you can handle each chunk as it comes in.
 
-    // Token auth, if there is any
-    let basicAuth: HTTPBasicAuth? = req.basicAuth()
-
-    // Bearer auth, if there is any
-    let bearerAuth: HTTPBearerAuth? = req.bearerAuth()
+```swift
+app.post("/large_file", options: .stream) { req in
+    req.body?.stream.readAll { chunk in
+        // process chunk
+    }
 }
 ```
